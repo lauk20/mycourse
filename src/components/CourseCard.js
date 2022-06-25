@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography"
 import Box from "@mui/material/Box"
 import IconButton from "@mui/material/IconButton"
 import SettingsIcon from '@mui/icons-material/Settings';
+import AddIcon from '@mui/icons-material/Add';
 import { Link } from "react-router-dom"
 
 const CourseCard = ({ title }) => {
@@ -16,6 +17,9 @@ const CourseCard = ({ title }) => {
           <Typography component={ Link } to="/" sx={{color: "white", textDecoration: "none"}} variant="h6">COURSE</Typography>
         </Box>
         <Box display="flex" sx={{position: "absolute", bottom: 0, right: 0, pr: 0.5, justifyContent: "space-around"}}>
+          <IconButton sx={{color: "white"}}>
+            <AddIcon fontSize="small"/>
+          </IconButton>
           <IconButton sx={{color: "white"}}>
             <SettingsIcon fontSize="small"/>
           </IconButton>
