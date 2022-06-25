@@ -29,27 +29,27 @@ const CourseCard = ({ title }) => {
             </IconButton>
           </Box>
         </Box>
-        <CardContent sx={{display: "flex", flexDirection: "column", height: 215, minWidth: 300, maxWidth: 300, overflow: "hidden"}}>
-          <Box sx={{mb: 2}}>
-            <Typography sx={{color: "white"}} variant="subtitle2">Today</Typography>
-            <Typography component={Link} to="/" sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">TASK</Typography>
-            <br/>
-            <Typography component={Link} to="/" sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">TASK</Typography>
-            <br/>
-            <Typography component={Link} to="/" sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">TASK</Typography>
-            <br/>
-          </Box>
-          <Box sx={{mb: 2}}>
-            <Typography sx={{color: "white"}} variant="subtitle2">Today</Typography>
-            <Typography component={Link} to="/" sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">TASK</Typography>
-            <br/>
-            <Typography component={Link} to="/" sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">TASK</Typography>
-            <br/>
-            <Typography component={Link} to="/" sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">TASK</Typography>
-            <br/>
-          </Box>
-        </CardContent>
       </CardActionArea>
+      <CardContent sx={{display: "flex", flexDirection: "column", height: 215, minWidth: 300, maxWidth: 300, overflow: "hidden"}}>
+        <Box sx={{mb: 2}}>
+          <Typography sx={{color: "white"}} variant="subtitle2">Today</Typography>
+          <Typography component={Link} to="/" sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">TASK</Typography>
+          <br/>
+          <Typography component={Link} to="/" sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">TASK</Typography>
+          <br/>
+          <Typography component={Link} to="/" sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">TASK</Typography>
+          <br/>
+        </Box>
+        <Box sx={{mb: 2}}>
+          <Typography sx={{color: "white"}} variant="subtitle2">Today</Typography>
+          <Typography component={Link} to="/" sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">TASK</Typography>
+          <br/>
+          <Typography component={Link} to="/" sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">TASK</Typography>
+          <br/>
+          <Typography component={Link} to="/" sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">TASK</Typography>
+          <br/>
+        </Box>
+      </CardContent>
       <CardActions>
         <Button sx={{color: "white"}}>
           Show All
