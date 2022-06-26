@@ -12,7 +12,11 @@ import AddIcon from '@mui/icons-material/Add';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link } from "react-router-dom"
 
-const NavBar = () => {
+const NavBar = ({setOpenCourseDialog}) => {
+  const openDialog = () => {
+    setOpenCourseDialog(true);
+  }
+
   return (
     <>
     <AppBar color="primary">
@@ -31,7 +35,7 @@ const NavBar = () => {
           </MenuItem>
         </Box>
         <Box>
-          <IconButton sx={{color:"white", mr:1}} size="large">
+          <IconButton sx={{color:"white", mr:1}} size="large" onClick={openDialog}>
             <AddIcon/>
           </IconButton>
         </Box>

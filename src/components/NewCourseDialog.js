@@ -24,16 +24,16 @@ const WhiteBorderTextField = styled(TextField)`
   }
 `;
 
-const NewCourseDialog = ()=> {
+const NewCourseDialog = ({openCourseDialog, setOpenCourseDialog})=> {
   return (
-    <Dialog open={true}>
+    <Dialog open={openCourseDialog}>
       <DialogTitle sx={{backgroundColor: "rgb(35, 35, 35)", color: "white"}}>Add New Course</DialogTitle>
       <DialogContent sx={{backgroundColor: "rgb(35, 35, 35)"}}>
         <DialogContentText sx={{mb: 2}}>Add a new course to your current list of courses</DialogContentText>
-        <WhiteBorderTextField autofocus id="name" label="Course Name" fullWidth sx={{input: {color: "white"}}}/>
+        <WhiteBorderTextField autoFocus id="name" label="Course Name" fullWidth sx={{input: {color: "white"}}}/>
       </DialogContent>
       <DialogActions sx={{backgroundColor: "rgb(35, 35, 35)"}}>
-        <Button sx={{color: "white"}}>Cancel</Button>
+        <Button sx={{color: "white"}} onClick={() => {setOpenCourseDialog(false)}}>Cancel</Button>
         <Button sx={{color: "white"}}>Add</Button>
       </DialogActions>
     </Dialog>

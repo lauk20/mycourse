@@ -3,16 +3,21 @@ import Nav from "./components/Nav"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import Courses from "./pages/Courses"
 import Login from "./pages/Login"
+import AddCourse from "./pages/AddCourse"
+import {useState} from "react"
 
 function App() {
+  const [openCourseDialog, setOpenCourseDialog] = useState(false)
+  
   return (
     <>
       <CssBaseline/>
       <div className="App">
         <Router>
-          <Nav/>
+          <Nav setOpenCourseDialog={setOpenCourseDialog}/>
           <Routes>
-            <Route path="/courses" element={<Courses/>}/>
+            <Route path="/addcourse" element={<AddCourse/>}/>
+            <Route path="/courses" element={<Courses openCourseDialog={openCourseDialog} setOpenCourseDialog={setOpenCourseDialog}/>}/>
             <Route path="/login" element={<Login/>}/>
           </Routes>
         </Router>
