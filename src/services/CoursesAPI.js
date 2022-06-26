@@ -7,7 +7,11 @@ const getCourses = async () => {
   return response.data
 }
 
-const addCourse = async (course) => {
+const addCourse = async (courseTitle) => {
+  const course = {
+    name: courseTitle,
+    assignments: []
+  }
   const response = await axios.post(url, course);
 
   return response.data
