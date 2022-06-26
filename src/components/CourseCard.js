@@ -16,7 +16,7 @@ const CourseCard = ({ title }) => {
     <Card sx={{minWidth: 300, maxWidth: 300, background: "rgb(35, 35, 35)", overflow: "hidden"}}>
       <CardActionArea>
         <Box sx={{position: "relative"}}>
-          <CardMedia component="img" image="https://media.istockphoto.com/vectors/abstract-navy-background-vector-id1146367630?k=20&m=1146367630&s=612x612&w=0&h=Ul1uZFXLlpgro0N8Jm5zk-z_TBVuUMwbHAFeF41bLkg=" height="85" sx={{overflow:"hidden"}}/>
+          <CardMedia component="img" image="https://static.vecteezy.com/system/resources/previews/002/381/744/non_2x/dark-geometric-black-abstract-background-elegent-design-pattern-free-vector.jpg" height="85" sx={{overflow:"hidden"}}/>
           <Box display="flex" sx={{position: "absolute", bottom: 0, left: 0, pl: 2, justifyContent: "space-around"}}>
             <Typography component={ Link } to="/" sx={{color: "white", textDecoration: "none"}} variant="h6">COURSE</Typography>
           </Box>

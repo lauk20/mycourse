@@ -14,7 +14,7 @@ export default createMuiTheme({
       secondary: 'rgba(255,255,255,0.7)',
     },
     background: {
-      default: '#303030',
+      default: 'rgb(20, 30, 41)',
     },
   },
 });
