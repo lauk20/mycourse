@@ -32,8 +32,11 @@ const NewCourseDialog = ({openCourseDialog, setOpenCourseDialog})=> {
 
   const dispatch = useDispatch()
   const newCourse = async (event) => {
-    console.log(name)
-    dispatch(createCourse(name))
+    if (name !== "") {
+      console.log(name)
+      dispatch(createCourse(name))
+      setOpenCourseDialog(false)
+    }
   }
 
   return (

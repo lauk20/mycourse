@@ -3,7 +3,7 @@ import courseReducer from "./reducers/courseReducers"
 
 const store = configureStore({
   reducer: {
-    notes: courseReducer
+    courses: courseReducer
   }
 })
 
