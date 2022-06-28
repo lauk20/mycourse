@@ -12,7 +12,8 @@ import Stack from "@mui/material/Stack"
 import { styled } from "@mui/material/styles"
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker"
+import { TimePicker } from "@mui/x-date-pickers/TimePicker"
 
 const WhiteBorderTextField = styled(TextField)`
   & label.Mui-focused {
@@ -65,6 +66,22 @@ const popperstyles = {
   },
 }
 
+const timepopperstyles = {
+  "& .MuiPaper-root": {
+    backgroundColor: "#0e0e0e",
+    color: "white",
+  },
+  "& .MuiPickersArrowSwitcher-button": {
+    color: "white",
+  },
+  "& .MuiIconButton-root": {
+    color: "white"
+  },
+  "& .css-1flhz3h": {
+    color: "white"
+  }
+}
+
 const NewAssignmentDialog = ({openNewAssignDialog, setOpenNewAssignDialog})=> {
   const [name, setName] = useState("");
   const [date, setDate] = useState(new Date());
@@ -86,7 +103,11 @@ const NewAssignmentDialog = ({openNewAssignDialog, setOpenNewAssignDialog})=> {
           <DialogContentText sx={{mb: 2}}>Add a new assignment to your this course</DialogContentText>
           <Stack spacing={3}>
             <WhiteBorderTextField autoFocus id="name" label="Assignment Name" fullWidth value={name} onChange={(event) => {setName(event.target.value)}} sx={{svg: {color:"white"}, label: {color: "white"}, input: {color: "white"}}}/>
-            <DateTimePicker label="Assignment Due Date and Time" value={date} onChange={setDate} PopperProps={{sx:popperstyles}} sx={{input: {color: "white"}}}
+            <DesktopDatePicker label="Assignment Due Date" value={date} onChange={setDate} PopperProps={{sx:popperstyles}} sx={{input: {color: "white"}}}
+              renderInput={(params) =>
+                <WhiteBorderTextField {...params} sx={{svg: {color:"white"}, label: {color: "white"}, input: {color: "white"}}}/>}
+            />
+            <TimePicker label="Due Time" value={date} onChange={setDate} PopperProps={{sx: timepopperstyles}}
               renderInput={(params) =>
                 <WhiteBorderTextField {...params} sx={{svg: {color:"white"}, label: {color: "white"}, input: {color: "white"}}}/>}
             />
