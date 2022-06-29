@@ -13,7 +13,7 @@ import { Link } from "react-router-dom"
 import NewAssignmentDialog from "./NewAssignmentDialog"
 import { useState } from "react"
 
-const CourseCard = ({ title }) => {
+const CourseCard = ({ title, courseID }) => {
   const [openNewAssignDialog, setOpenNewAssignDialog] = useState(false)
 
   const openAssign = () => {
@@ -65,7 +65,7 @@ const CourseCard = ({ title }) => {
         </Button>
       </CardActions>
     </Card>
-    <NewAssignmentDialog openNewAssignDialog={openNewAssignDialog} setOpenNewAssignDialog={setOpenNewAssignDialog}/>
+    <NewAssignmentDialog openNewAssignDialog={openNewAssignDialog} setOpenNewAssignDialog={setOpenNewAssignDialog} courseID={courseID}/>
     </>
   )
 }

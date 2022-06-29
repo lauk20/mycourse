@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux"
-import { createCourse } from "../reducers/courseReducers"
+import { createAssignment } from "../reducers/assignmentReducers"
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -82,15 +82,15 @@ const timepopperstyles = {
   }
 }
 
-const NewAssignmentDialog = ({openNewAssignDialog, setOpenNewAssignDialog})=> {
+const NewAssignmentDialog = ({openNewAssignDialog, setOpenNewAssignDialog, courseID})=> {
   const [name, setName] = useState("");
   const [date, setDate] = useState(new Date());
 
   const dispatch = useDispatch()
-  const newCourse = async (event) => {
+  const newAssignment = async (event) => {
     if (name !== "") {
-      console.log(name)
-      dispatch(createCourse(name))
+      console.log(name, courseID)
+      dispatch(createAssignment(name, date, courseID))
       setOpenNewAssignDialog(false)
     }
   }
@@ -115,7 +115,7 @@ const NewAssignmentDialog = ({openNewAssignDialog, setOpenNewAssignDialog})=> {
         </DialogContent>
         <DialogActions sx={{backgroundColor: "rgb(35, 35, 35)"}}>
           <Button sx={{color: "white"}} onClick={() => {setOpenNewAssignDialog(false)}}>Cancel</Button>
-          <Button sx={{color: "white"}} onClick={newCourse}>Add</Button>
+          <Button sx={{color: "white"}} onClick={newAssignment}>Add</Button>
         </DialogActions>
       </Dialog>
     </LocalizationProvider>

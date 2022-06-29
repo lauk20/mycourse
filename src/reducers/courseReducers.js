@@ -10,7 +10,11 @@ const courseSlice = createSlice({
     },
     setCourses(state, action) {
       return action.payload
-    }
+    },
+    newAssignment(state, action){
+      const c = state.find(course => course._id === action.payload.courseID)
+      c.assignments.push(action.payload);
+    },
   }
 })
 
@@ -28,5 +32,5 @@ export const createCourse = title => {
   }
 }
 
-export const { addCourse, setCourses } = courseSlice.actions
+export const { addCourse, setCourses, newAssignment } = courseSlice.actions
 export default courseSlice.reducer
