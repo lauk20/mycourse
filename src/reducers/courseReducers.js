@@ -11,9 +11,34 @@ const courseSlice = createSlice({
     setCourses(state, action) {
       return action.payload
     },
-    newAssignment(state, action){
-      const c = state.find(course => course._id === action.payload.courseID)
-      c.assignments.push(action.payload);
+    newAssignment(state, action) {
+      const newActionPayload = {...action.payload, due: action.payload.due.toString()}
+      console.log(newActionPayload, "apl")
+      const newState = state.map(course => {
+        if (course._id === action.payload.course) {
+          console.log(course.assignments)
+          return {...course, assignments: [...course.assignments, newActionPayload]}
+        }
+
+        return course
+      })
+
+      return newState
+      /*
+      const assign = action.payload;
+      console.log(assign)
+      console.log(state)
+      const newAssign = assign.map(({due, ...others}) => others)
+      const newState = state.map(course => {
+        if (course._id === action.payload.courseID) {
+          return {...course, assignments: [...course.assignments, newAssign]}
+        }
+
+        return course
+      })
+
+      return newState
+      */
     },
   }
 })

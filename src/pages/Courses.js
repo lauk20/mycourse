@@ -15,7 +15,7 @@ const Courses = ({openCourseDialog, setOpenCourseDialog}) => {
       <Grid container p={5} spacing={4}>
       {courses.map(course =>
           <Grid key={course._id} item>
-            <CourseCard title={course.name} courseID={course._id}/>
+            <CourseCard title={course.name} courseID={course._id} course={course}/>
           </Grid>
       )}
       </Grid>

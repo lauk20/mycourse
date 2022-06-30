@@ -12,13 +12,20 @@ import AddIcon from '@mui/icons-material/Add';
 import { Link } from "react-router-dom"
 import NewAssignmentDialog from "./NewAssignmentDialog"
 import { useState } from "react"
+import { useSelector } from "react-redux"
 
-const CourseCard = ({ title, courseID }) => {
+const CourseCard = ({ title, courseID, course}) => {
   const [openNewAssignDialog, setOpenNewAssignDialog] = useState(false)
 
   const openAssign = () => {
     setOpenNewAssignDialog(true)
   }
+
+  console.log(course.assignments)
+
+  const assignments = course.assignments.slice().sort((a, b) => {return new Date(a.due) - new Date(b.due)})
+
+  console.log(assignments)
 
   return (
     <>
