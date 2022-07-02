@@ -4,17 +4,10 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import Courses from "./pages/Courses"
 import Login from "./pages/Login"
 import AddCourse from "./pages/AddCourse"
-import { useState, useEffect } from "react"
-import { useDispatch } from "react-redux"
-import { initializeCourses } from "./reducers/courseReducers"
+import { useState } from "react"
 
 function App() {
   const [openCourseDialog, setOpenCourseDialog] = useState(false)
-
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(initializeCourses())
-  })
 
   return (
     <>

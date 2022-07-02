@@ -3,12 +3,20 @@ import {
 } from "@mui/material"
 import CourseCard from "../components/CourseCard"
 import NewCourseDialog from "../components/NewCourseDialog"
+import { useEffect } from "react"
 import { useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
+import { initializeCourses } from "../reducers/courseReducers"
 
 const Courses = ({openCourseDialog, setOpenCourseDialog}) => {
   const courses = useSelector(state => {
     return state.courses;
   })
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(initializeCourses())
+  }, [dispatch])
 
   return (
     <>

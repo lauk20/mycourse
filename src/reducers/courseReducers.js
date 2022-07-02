@@ -12,12 +12,10 @@ const courseSlice = createSlice({
       return action.payload
     },
     newAssignment(state, action) {
-      const newActionPayload = {...action.payload, due: action.payload.due.toString()}
-      console.log(newActionPayload, "apl")
       const newState = state.map(course => {
         if (course._id === action.payload.course) {
           console.log(course.assignments)
-          return {...course, assignments: [...course.assignments, newActionPayload]}
+          return {...course, assignments: [...course.assignments, action.payload]}
         }
 
         return course

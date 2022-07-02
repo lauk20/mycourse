@@ -12,19 +12,19 @@ import AddIcon from '@mui/icons-material/Add';
 import { Link } from "react-router-dom"
 import NewAssignmentDialog from "./NewAssignmentDialog"
 import { useState } from "react"
-import { differenceInDays, format, isBefore } from "date-fns"
+import { differenceInDays, format, isBefore, isToday, parseISO } from "date-fns"
 
 const dateDisplay = (date) => {
-  const today = new Date();
-  const duedate = new Date(date)
-  const diff = differenceInDays(today, duedate)
-
-  if (isBefore(duedate, today)) {
+  const today = parseISO(format(new Date(), "yyy-MM-dd"));
+  const duedate = parseISO(date)
+  //console.log("DUE: ", duedate)
+  const diff = differenceInDays(duedate, today)
+  //console.log(date, "A", duedate, today)
+  if (isBefore(duedate, today) && !isToday(duedate, today)) {
     return date + " (Late)"
   }
-
   if (diff === 0) {
-    return "Today"
+    return "Tomorrow"
   } else if (diff === 1) {
     return "Tomorrow"
   } else if (diff < 7 && diff > 0) {
