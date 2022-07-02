@@ -89,13 +89,13 @@ const NewAssignmentDialog = ({openNewAssignDialog, setOpenNewAssignDialog, cours
 
   const dispatch = useDispatch()
   const addnewAssignment = async (event) => {
-    if (name !== "") {
+    if (name !== "" && openNewAssignDialog) {
+      setOpenNewAssignDialog(false)
       console.log(name, courseID)
       const assignment = await dispatch(createAssignment(name, date, courseID))
       console.log(assignment)
       //dispatch(newAssignment({content: name, due: date.toString(), course: courseID}))
       dispatch(newAssignment(assignment))
-      setOpenNewAssignDialog(false)
     }
   }
 
