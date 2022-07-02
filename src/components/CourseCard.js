@@ -24,7 +24,7 @@ const dateDisplay = (date) => {
     return date + " (Late)"
   }
   if (diff === 0) {
-    return "Tomorrow"
+    return "Today"
   } else if (diff === 1) {
     return "Tomorrow"
   } else if (diff < 7 && diff > 0) {
