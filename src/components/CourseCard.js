@@ -12,7 +12,27 @@ import AddIcon from '@mui/icons-material/Add';
 import { Link } from "react-router-dom"
 import NewAssignmentDialog from "./NewAssignmentDialog"
 import { useState } from "react"
-import { useSelector } from "react-redux"
+import { differenceInDays, format, isBefore } from "date-fns"
+
+const dateDisplay = (date) => {
+  const today = new Date();
+  const duedate = new Date(date)
+  const diff = differenceInDays(today, duedate)
+
+  if (isBefore(duedate, today)) {
+    return date + " (Late)"
+  }
+
+  if (diff === 0) {
+    return "Today"
+  } else if (diff === 1) {
+    return "Tomorrow"
+  } else if (diff < 7 && diff > 0) {
+    return format(duedate, "EEEE")
+  } else {
+    return date
+  }
+}
 
 const CourseCard = ({ title, courseID, course}) => {
   const [openNewAssignDialog, setOpenNewAssignDialog] = useState(false)
@@ -21,11 +41,23 @@ const CourseCard = ({ title, courseID, course}) => {
     setOpenNewAssignDialog(true)
   }
 
-  console.log(course.assignments)
+  //console.log(course.assignments)
 
   const assignments = course.assignments.slice().sort((a, b) => {return new Date(a.due) - new Date(b.due)})
 
-  console.log(assignments)
+  //console.log(assignments)
+
+  const assignmentsObj = { };
+  assignments.forEach((assign) => {
+    const date = assign.due.split("T")[0]
+    if (assignmentsObj[date]) {
+      assignmentsObj[date].push(assign)
+    } else {
+      assignmentsObj[date] = [assign]
+    }
+  })
+
+  //console.log(assignmentsObj)
 
   return (
     <>
@@ -47,24 +79,21 @@ const CourseCard = ({ title, courseID, course}) => {
         </Box>
       </Box>
       <CardContent sx={{display: "flex", flexDirection: "column", height: 215, minWidth: 300, maxWidth: 300, overflow: "hidden"}}>
-        <Box sx={{mb: 2}}>
-          <Typography sx={{color: "white"}} variant="subtitle2">Today</Typography>
-          <Typography component={Link} to="/" sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">TASK</Typography>
-          <br/>
-          <Typography component={Link} to="/" sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">TASK</Typography>
-          <br/>
-          <Typography component={Link} to="/" sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">TASK</Typography>
-          <br/>
-        </Box>
-        <Box sx={{mb: 2}}>
-          <Typography sx={{color: "white"}} variant="subtitle2">Today</Typography>
-          <Typography component={Link} to="/" sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">TASK</Typography>
-          <br/>
-          <Typography component={Link} to="/" sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">TASK</Typography>
-          <br/>
-          <Typography component={Link} to="/" sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">TASK</Typography>
-          <br/>
-        </Box>
+        {
+          Object.keys(assignmentsObj).map(key =>
+            <Box key={key} sx={{mb: 2}}>
+              <Typography sx={{color: "white"}} variant="subtitle2">{dateDisplay(key)}</Typography>
+              {
+                assignmentsObj[key].map(item =>
+                  <div key={item._id}>
+                    <Typography key={item._id} component={Link} to="/" sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">{item.content}</Typography>
+                    <br/>
+                  </div>
+                )
+              }
+            </Box>
+          )
+        }
       </CardContent>
       <CardActions>
         <Button sx={{color: "white"}}>
