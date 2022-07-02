@@ -34,6 +34,10 @@ const dateDisplay = (date) => {
   }
 }
 
+const assignmentDateDisplay = (assignment) => {
+  return format(parseISO(assignment.due), "h:m a") + " - " + assignment.content
+}
+
 const CourseCard = ({ title, courseID, course}) => {
   const [openNewAssignDialog, setOpenNewAssignDialog] = useState(false)
 
@@ -86,7 +90,7 @@ const CourseCard = ({ title, courseID, course}) => {
               {
                 assignmentsObj[key].map(item =>
                   <div key={item._id}>
-                    <Typography key={item._id} component={Link} to="/" sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">{item.content}</Typography>
+                    <Typography key={item._id} component={Link} to="/" sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">{assignmentDateDisplay(item)}</Typography>
                     <br/>
                   </div>
                 )
