@@ -1,13 +1,18 @@
 import {
   Grid,
-  ListItem,
   Card,
+  CardActionArea,
   CardMedia,
   Box,
   Typography,
   Avatar,
+  IconButton,
 } from "@mui/material"
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import AddIcon from "@mui/icons-material/Add"
+import SettingsIcon from "@mui/icons-material/Settings"
+import NewAssignmentDialog from "../components/NewAssignmentDialog"
+import { useState } from "react"
 import { useParams } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { differenceInDays, format, isBefore, isToday, parseISO } from "date-fns"
@@ -19,7 +24,7 @@ const dateDisplay = (date) => {
   const diff = differenceInDays(duedate, today)
   //console.log(date, "A", duedate, today)
   if (isBefore(duedate, today) && !isToday(duedate, today)) {
-    return date + " (Late)"
+    return "Due " + date.split("T")[0] + " (Late)"
   }
   if (diff === 0) {
     return "Due Today"
@@ -28,11 +33,16 @@ const dateDisplay = (date) => {
   } else if (diff < 7 && diff > 0) {
     return "Due " + format(duedate, "EEEE")
   } else {
-    return date
+    return "Due " + date.split("T")[0]
   }
 }
 
 const CoursePage = () => {
+  const [openNewAssignDialog, setOpenNewAssignDialog] = useState(false)
+  const openAssign = () => {
+    setOpenNewAssignDialog(true)
+  }
+
   const courseID = useParams().id;
   const course = useSelector(state => {
     const courses = state.courses;
@@ -43,9 +53,11 @@ const CoursePage = () => {
       }
     }
   })
+
   const assignments = course.assignments.slice().sort((a, b) => {return new Date(a.due) - new Date(b.due)})
-  console.log(assignments)
+
   return (
+    <>
     <Grid container direction="column" justifyContent="flex-start" alignItems="center" sx={{p: 5}} spacing={1}>
       <Grid item sx={{width: "100%", mb: 2}} display="flex" justifyContent="center">
         <Card sx={{position: "relative", width: "100%", maxWidth: 1015, backgroundColor: "rgb(35, 35, 35)"}}>
@@ -55,47 +67,42 @@ const CoursePage = () => {
           <Box display="flex" sx={{position: "absolute", bottom: 5, left: 0, pl: 2, justifyContent: "space-around"}}>
             <Typography sx={{color: "white", textDecoration: "none"}} variant="h4">{course.name}</Typography>
           </Box>
+          <Box display="flex" sx={{position: "absolute", bottom: 0, right: 0, pr: 0.5, justifyContent: "space-around"}}>
+            <IconButton sx={{color: "white"}}>
+              <AddIcon fontSize="large" onClick={openAssign}/>
+            </IconButton>
+            <IconButton sx={{color: "white"}}>
+              <SettingsIcon fontSize="large"/>
+            </IconButton>
+          </Box>
         </Card>
       </Grid>
       {
         assignments.map((assign) =>
           <Grid key={assign._id} item sx={{width: "100%"}} display="flex" justifyContent="center">
             <Card sx={{width: "100%", maxWidth: 1015, backgroundColor: "rgb(35, 35, 35)"}}>
-              <Box display="flex" sx={{height: "100%", height: 85}}>
-                <Box display="flex" justifyContent="center" alignItems="center" sx={{ml: 1}}>
-                  <Avatar sx={{width: "100", height: "100", backgroundColor: "rgb(25, 25, 25)"}}>
-                    <AssignmentIcon variant="large" sx={{color: "white"}}/>
-                  </Avatar>
+                <CardActionArea>
+                <Box display="flex" sx={{height: 85}}>
+                  <Box display="flex" justifyContent="center" alignItems="center" sx={{ml: 1}}>
+                    <Avatar sx={{width: "100", height: "100", backgroundColor: "rgb(25, 25, 25)"}}>
+                      <AssignmentIcon variant="large" sx={{color: "white"}}/>
+                    </Avatar>
+                  </Box>
+                  <Box display="flex" justifyContent="flex-start" alignItems="center" sx={{width: "85%", ml: 1}} fullWidth>
+                    <Typography color="white" variant="subtitle" sx={{width: "100%", fontWeight:"bold"}}>{assign.content}</Typography>
+                  </Box>
+                  <Box display="flex" justifyContent="flex-start" alignItems="center" sx={{width: "10%", marginLeft: "auto", mr: 1, order: 2}} fullWidth>
+                    <Typography color="white" variant="caption" sx={{width: "120%", overflowWrap: "break-word"}}>{dateDisplay(assign.due.slice('T'))}</Typography>
+                  </Box>
                 </Box>
-                <Box display="flex" justifyContent="flex-start" alignItems="center" sx={{width: "85%", ml: 1}} fullWidth>
-                  <Typography color="white" variant="subtitle" sx={{fontWeight:"bold"}}>{assign.content}</Typography>
-                </Box>
-                <Box display="flex" justifyContent="center" alignItems="center" sx={{float: "right", mr: 1}} fullWidth>
-                  <Typography color="white" variant="caption">{dateDisplay(assign.due.slice('T'))}</Typography>
-                </Box>
-              </Box>
+              </CardActionArea>
             </Card>
           </Grid>
         )
       }
-      <Grid item sx={{width: "100%"}} display="flex" justifyContent="center">
-        <Card sx={{width: "100%", maxWidth: 1015, backgroundColor: "rgb(35, 35, 35)"}}>
-          <Box display="flex" sx={{height: "100%", height: 85}}>
-            <Box display="flex" justifyContent="center" alignItems="center" sx={{ml: 1}}>
-              <Avatar sx={{width: "100", height: "100", backgroundColor: "rgb(25, 25, 25)"}}>
-                <AssignmentIcon variant="large" sx={{color: "white"}}/>
-              </Avatar>
-            </Box>
-            <Box display="flex" justifyContent="flex-start" alignItems="center" sx={{width: "85%", ml: 1}} fullWidth>
-              <Typography color="white" variant="subtitle" sx={{fontWeight:"bold"}}>TASK ASSIGNMENT 123</Typography>
-            </Box>
-            <Box display="flex" justifyContent="center" alignItems="center" sx={{ml: 1}} fullWidth>
-              <Typography color="white" variant="caption">Due Today</Typography>
-            </Box>
-          </Box>
-        </Card>
-      </Grid>
     </Grid>
+    <NewAssignmentDialog openNewAssignDialog={openNewAssignDialog} setOpenNewAssignDialog={setOpenNewAssignDialog} courseID={courseID}/>
+    </>
   )
 }
 
