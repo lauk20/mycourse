@@ -83,17 +83,25 @@ const CoursePage = () => {
             <Card sx={{width: "100%", maxWidth: 1015, backgroundColor: "rgb(35, 35, 35)"}}>
                 <CardActionArea>
                 <Box display="flex" sx={{height: 85}}>
-                  <Box display="flex" justifyContent="center" alignItems="center" sx={{ml: 1}}>
-                    <Avatar sx={{width: "100", height: "100", backgroundColor: "rgb(25, 25, 25)"}}>
-                      <AssignmentIcon variant="large" sx={{color: "white"}}/>
-                    </Avatar>
-                  </Box>
-                  <Box display="flex" justifyContent="flex-start" alignItems="center" sx={{width: "85%", ml: 1}} fullWidth>
-                    <Typography color="white" variant="subtitle" sx={{width: "100%", fontWeight:"bold"}}>{assign.content}</Typography>
-                  </Box>
-                  <Box display="flex" justifyContent="flex-start" alignItems="center" sx={{width: "10%", marginLeft: "auto", mr: 1, order: 2}} fullWidth>
-                    <Typography color="white" variant="caption" sx={{width: "120%", overflowWrap: "break-word"}}>{dateDisplay(assign.due.slice('T'))}</Typography>
-                  </Box>
+                  <Grid container>
+                    <Grid item sx={{height: "100%"}} display="flex" justifyContent="center" alignItems="center">
+                      <Box display="flex" justifyContent="center" alignItems="center" sx={{ml: 1}}>
+                        <Avatar sx={{width: "100", height: "100", backgroundColor: "rgb(25, 25, 25)"}}>
+                          <AssignmentIcon variant="large" sx={{color: "white"}}/>
+                        </Avatar>
+                      </Box>
+                    </Grid>
+                    <Grid item sx={{height: "100%"}} display="flex" justifyContent="flex-start" alignItems="center" xs>
+                      <Box display="flex" justifyContent="flex-start" alignItems="center" sx={{width: "85%", ml: 1}} fullWidth>
+                        <Typography color="white" variant="subtitle" sx={{width: "100%", fontWeight:"bold"}}>{assign.content}</Typography>
+                      </Box>
+                    </Grid>
+                    <Grid item sx={{height: "100%"}} display="flex" justifyContent="flex-start" alignItems="center">
+                      <Box display="flex" justifyContent="flex-start" alignItems="center" sx={{height: "100%", marginLeft: "auto", mr: 1, order: 2}} fullWidth>
+                        <Typography color="white" variant="caption" sx={{width: "120%", overflowWrap: "break-word"}}>{dateDisplay(assign.due.slice('T'))}</Typography>
+                      </Box>
+                    </Grid>
+                  </Grid>
                 </Box>
               </CardActionArea>
             </Card>
