@@ -97,7 +97,7 @@ const CoursePage = () => {
                       </Box>
                     </Grid>
                     <Grid item sx={{height: "100%"}} display="flex" justifyContent="flex-start" alignItems="center">
-                      <Box display="flex" justifyContent="flex-start" alignItems="center" sx={{height: "100%", marginLeft: "auto", mr: 1, order: 2}} fullWidth>
+                      <Box display="flex" justifyContent="flex-start" alignItems="center" sx={{height: "100%", marginLeft: "auto", mr: 1}} fullWidth>
                         <Typography color="white" variant="caption" sx={{width: "120%", overflowWrap: "break-word"}}>{dateDisplay(assign.due.slice('T'))}</Typography>
                       </Box>
                     </Grid>
