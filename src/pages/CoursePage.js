@@ -79,7 +79,7 @@ const CoursePage = () => {
       </Grid>
       {
         assignments.map((assign) =>
-          <Grid key={assign._id} item sx={{width: "100%"}} display="flex" justifyContent="center">
+          <Grid item key={assign._id} sx={{width: "100%"}} display="flex" justifyContent="center">
             <Card sx={{width: "100%", maxWidth: 1015, backgroundColor: "rgb(35, 35, 35)"}}>
                 <CardActionArea>
                 <Box display="flex" sx={{height: 85}}>
