@@ -12,10 +12,11 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import AddIcon from "@mui/icons-material/Add"
 import SettingsIcon from "@mui/icons-material/Settings"
 import NewAssignmentDialog from "../components/NewAssignmentDialog"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { differenceInDays, format, isBefore, isToday, parseISO } from "date-fns"
+import { initializeCourses } from "../reducers/courseReducers"
 
 const dateDisplay = (date) => {
   const today = parseISO(format(new Date(), "yyy-MM-dd"));
@@ -43,6 +44,11 @@ const CoursePage = () => {
     setOpenNewAssignDialog(true)
   }
 
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(initializeCourses())
+  }, [dispatch])
+
   const courseID = useParams().id;
   const course = useSelector(state => {
     const courses = state.courses;
@@ -54,6 +60,13 @@ const CoursePage = () => {
     }
   })
 
+  if (course === undefined) {
+    return (
+      <>
+      </>
+    )
+  }
+  
   const assignments = course.assignments.slice().sort((a, b) => {return new Date(a.due) - new Date(b.due)})
 
   return (
@@ -68,8 +81,8 @@ const CoursePage = () => {
             <Typography sx={{color: "white", textDecoration: "none"}} variant="h4">{course.name}</Typography>
           </Box>
           <Box display="flex" sx={{position: "absolute", bottom: 0, right: 0, pr: 0.5, justifyContent: "space-around"}}>
-            <IconButton sx={{color: "white"}}>
-              <AddIcon fontSize="large" onClick={openAssign}/>
+            <IconButton sx={{color: "white"}} onClick={openAssign}>
+              <AddIcon fontSize="large"/>
             </IconButton>
             <IconButton sx={{color: "white"}}>
               <SettingsIcon fontSize="large"/>
