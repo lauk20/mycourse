@@ -11,12 +11,14 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 const NavBar = ({setOpenCourseDialog}) => {
   const openDialog = () => {
     setOpenCourseDialog(true);
   }
+
+  const location = useLocation();
 
   return (
     <>
@@ -41,11 +43,13 @@ const NavBar = ({setOpenCourseDialog}) => {
                 </Typography>
               </MenuItem>
             </Box>
-            <Box>
-              <IconButton sx={{color:"white", mr:1}} size="large" onClick={openDialog}>
-                <AddIcon/>
-              </IconButton>
-            </Box>
+            {location.pathname === "/courses" &&
+              <Box>
+                <IconButton sx={{color:"white", mr:1}} size="large" onClick={openDialog}>
+                  <AddIcon/>
+                </IconButton>
+              </Box>
+            }
           </Grid>
           <Grid item display="flex" justifyContent="flex-start" alignItems="center">
             <Typography>NAME</Typography>
