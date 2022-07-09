@@ -39,7 +39,7 @@ const Login = () => {
           <Avatar sx={{color: "white", width: "50", height: "50", bgcolor: "rgb(25, 25, 25)"}}>
             <LoginIcon variant="large" sx={{fontSize: 30}}/>
           </Avatar>
-          <Typography color="white" variant="h6">LOG IN</Typography>
+          <Typography color="white" variant="h6">LOGIN</Typography>
         </Grid>
         <Box component="form" noValidate onSubmit={submit}>
           <WhiteBorderTextField fullWidth required margin="normal" name="username" label="Username" id="username" sx={{input: {color: "white"}}} autoFocus/>
