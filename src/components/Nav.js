@@ -13,6 +13,7 @@ import AddIcon from '@mui/icons-material/Add';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link, useLocation } from "react-router-dom"
 import { useSelector } from "react-redux"
+//https://stackoverflow.com/questions/70341850/react-redirect-to-login-page-when-not-authenticated
 
 const NavBar = ({setOpenCourseDialog}) => {
   const openDialog = () => {
@@ -47,6 +48,16 @@ const NavBar = ({setOpenCourseDialog}) => {
     </>
   )
 
+  const courses = () => {
+    <Box>
+      <MenuItem sx={{borderRadius:"8px"}} component={ Link } to="/courses">
+        <Typography>
+            COURSES
+        </Typography>
+      </MenuItem>
+    </Box>
+  }
+
   return (
     <>
     <AppBar color="primary">
@@ -63,13 +74,7 @@ const NavBar = ({setOpenCourseDialog}) => {
             </Typography>
           </Grid>
           <Grid item xs display="flex" justifyContent="flex-start" alignItems="center">
-            <Box>
-              <MenuItem sx={{borderRadius:"8px"}} component={ Link } to="/courses">
-                <Typography>
-                    COURSES
-                </Typography>
-              </MenuItem>
-            </Box>
+            {userToken != null && courses()}
             {location.pathname === "/courses" && userToken != null &&
               <Box>
                 <IconButton sx={{color:"white", mr:1}} size="large" onClick={openDialog}>
