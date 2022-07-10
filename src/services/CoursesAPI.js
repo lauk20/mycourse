@@ -4,18 +4,19 @@ import { useSelector } from "react-redux"
 const url = "http://localhost:3001/api/courses"
 
 let userToken = null;
-const currentsession = window.localStorage.getItem("mycoursetoken");
-if (currentsession) {
-  userToken = "bearer " + JSON.parse(currentsession).token
-}
+let authHeader = null;
 
-const authHeader = {
-  headers: { Authorization: userToken },
+const setToken = async (token) => {
+  userToken = "bearer " + token
+  authHeader = {
+    headers: { Authorization: userToken }
+  }
 }
 
 const getCourses = async () => {
+  console.log(userToken)
   const response = await axios.get(url, authHeader);
-
+  console.log(response)
   return response.data
 }
 
@@ -29,6 +30,6 @@ const addCourse = async (courseTitle) => {
   return response.data
 }
 
-const services = { getCourses, addCourse }
+const services = { getCourses, addCourse, setToken }
 
 export default services
