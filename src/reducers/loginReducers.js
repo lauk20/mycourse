@@ -15,7 +15,7 @@ export const login = (username, password) => {
   return async (dispatch) => {
     const response = await UsersAPI.login(username, password);
 
-    if (user) {
+    if (response) {
       dispatch(setLogin(response))
     }
 
