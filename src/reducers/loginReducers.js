@@ -6,7 +6,7 @@ const loginSlice = createSlice({
   initialState: null,
   reducers: {
     setLogin(state, action) {
-      state = action
+      return action.payload
     }
   }
 })
@@ -14,7 +14,6 @@ const loginSlice = createSlice({
 export const login = (username, password) => {
   return async (dispatch) => {
     const response = await UsersAPI.login(username, password);
-
     if (response) {
       dispatch(setLogin(response))
     }
