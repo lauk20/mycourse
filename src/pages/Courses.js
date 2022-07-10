@@ -13,10 +13,16 @@ const Courses = ({openCourseDialog, setOpenCourseDialog}) => {
     return state.courses;
   })
 
+  const token = useSelector(state => {
+    const login = state.login
+
+    return login.token
+  })
+
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(initializeCourses())
-  }, [dispatch])
+    dispatch(initializeCourses(token))
+  }, [dispatch, token])
 
   return (
     <>

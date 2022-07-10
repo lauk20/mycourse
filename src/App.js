@@ -9,22 +9,21 @@ import Signup from "./pages/Signup"
 import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { setLogin } from "./reducers/loginReducers"
-import CoursesAPI from "./services/CoursesAPI"
 
 function App() {
   const [openCourseDialog, setOpenCourseDialog] = useState(false)
   const dispatch = useDispatch()
+
   //window.localStorage.removeItem("mycoursetoken")
   useEffect(() => {
     const currentsession = window.localStorage.getItem("mycoursetoken");
 
     if (currentsession != null) {
-      console.log(currentsession)
+      //console.log(currentsession)
       const userToken = JSON.parse(currentsession)
       dispatch(setLogin(userToken))
-      CoursesAPI.setToken(userToken.token)
     }
-  }, [])
+  }, [dispatch])
 
   const userToken = useSelector(state => {
     const login = state.login

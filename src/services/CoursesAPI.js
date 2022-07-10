@@ -1,5 +1,4 @@
 import axios from "axios"
-import { useSelector } from "react-redux"
 
 const url = "http://localhost:3001/api/courses"
 
@@ -13,8 +12,10 @@ const setToken = async (token) => {
   }
 }
 
-const getCourses = async () => {
-  console.log(userToken)
+const getCourses = async (token) => {
+  authHeader = {
+    headers: { Authorization: "bearer " + token }
+  }
   const response = await axios.get(url, authHeader);
   console.log(response)
   return response.data

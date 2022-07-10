@@ -44,10 +44,16 @@ const CoursePage = () => {
     setOpenNewAssignDialog(true)
   }
 
+  const token = useSelector(state => {
+    const login = state.login
+
+    return login.token
+  })
+
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(initializeCourses())
-  }, [dispatch])
+    dispatch(initializeCourses(token))
+  }, [dispatch, token])
 
   const courseID = useParams().id;
   const course = useSelector(state => {
@@ -66,7 +72,7 @@ const CoursePage = () => {
       </>
     )
   }
-  
+
   const assignments = course.assignments.slice().sort((a, b) => {return new Date(a.due) - new Date(b.due)})
 
   return (

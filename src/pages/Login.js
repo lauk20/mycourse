@@ -9,10 +9,9 @@ import {
 import LoginIcon from '@mui/icons-material/Login';
 import { styled } from "@mui/material/styles"
 import { useState } from "react"
-import { Link, Navigate, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { login } from "../reducers/loginReducers"
 import { useDispatch } from "react-redux"
-import CoursesAPI from "../services/CoursesAPI"
 
 const WhiteBorderTextField = styled(TextField)`
   & label.Mui-focused {
@@ -43,7 +42,6 @@ const Login = () => {
     try {
       const userToken = await dispatch(login(username, password))
       window.localStorage.setItem("mycoursetoken", JSON.stringify(userToken))
-      CoursesAPI.setToken(userToken)
       setUsername("")
       setPassword("")
       navigate("/courses")

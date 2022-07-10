@@ -41,9 +41,9 @@ const courseSlice = createSlice({
   }
 })
 
-export const initializeCourses = () => {
+export const initializeCourses = (token) => {
   return async dispatch => {
-    const courses = await courseAPI.getCourses()
+    const courses = await courseAPI.getCourses(token)
     dispatch(setCourses(courses))
   }
 }
