@@ -8,7 +8,10 @@ import {
 } from "@mui/material"
 import LoginIcon from '@mui/icons-material/Login';
 import { styled } from "@mui/material/styles"
-import { Link } from "react"
+import { useState } from "react"
+import { Link } from "react-router-dom"
+import { login } from "../reducers/loginReducers"
+import { useDispatch } from "react-redux"
 
 const WhiteBorderTextField = styled(TextField)`
   & label.Mui-focused {
@@ -28,8 +31,22 @@ const WhiteBorderTextField = styled(TextField)`
 `;
 
 const Login = () => {
-  const submit = (event) => {
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const dispatch = useDispatch()
+
+  const submit = async (event) => {
     event.preventDefault();
+
+    try {
+      const userToken = dispatch(login(username, password))
+
+      window.localStorage.setItem("mycoursetoken", JSON.stringify(userToken))
+      setUsername("")
+      setPassword("")
+    } catch {
+      console.log("error")
+    }
   }
 
   return (
@@ -42,10 +59,10 @@ const Login = () => {
           <Typography color="white" variant="h6">LOGIN</Typography>
         </Grid>
         <Box component="form" noValidate onSubmit={submit}>
-          <WhiteBorderTextField fullWidth required margin="normal" name="username" label="Username" id="username" sx={{input: {color: "white"}}} autoFocus/>
-          <WhiteBorderTextField fullWidth required margin="normal" name="password" label="Password" id="password" type="password" sx={{input: {color: "white"}}}/>
+          <WhiteBorderTextField value={username} onChange={({target}) => {setUsername(target.value)}} fullWidth required margin="normal" name="username" label="Username" id="username" sx={{input: {color: "white"}}} autoFocus/>
+          <WhiteBorderTextField value={password} onChange={({target}) => {setPassword(target.value)}} fullWidth required margin="normal" name="password" label="Password" id="password" type="password" sx={{input: {color: "white"}}}/>
           <Button type="submit" fullWidth sx={{color: "white", backgroundColor: "rgb(25, 25, 25)", "&:hover": {bgcolor: "rgb(25, 25, 25)"}}}>Login</Button>
-          <Button component={ Link } sx={{mt: 2, color: "white"}}>Sign Up</Button>
+          <Button component={ Link } to="/signup" sx={{mt: 2, color: "white"}}>Sign Up</Button>
         </Box>
       </Grid>
     </Box>
