@@ -12,9 +12,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link, useLocation } from "react-router-dom"
-import { useEffect } from "react"
 import { useSelector } from "react-redux"
-//https://stackoverflow.com/questions/70341850/react-redirect-to-login-page-when-not-authenticated
 
 const NavBar = ({setOpenCourseDialog}) => {
   const openDialog = () => {
