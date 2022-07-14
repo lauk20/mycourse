@@ -3,10 +3,13 @@ import {
   Card,
   CardActionArea,
   CardMedia,
+  CardContent,
   Box,
   Typography,
   Avatar,
   IconButton,
+  TextField,
+  Button
 } from "@mui/material"
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import AddIcon from "@mui/icons-material/Add"
@@ -17,6 +20,7 @@ import { useParams } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { differenceInDays, format, isBefore, isToday, parseISO } from "date-fns"
 import { initializeCourses } from "../reducers/courseReducers"
+import { styled } from "@mui/material/styles"
 
 const dateDisplay = (date) => {
   const today = parseISO(format(new Date(), "yyy-MM-dd"));
@@ -38,10 +42,33 @@ const dateDisplay = (date) => {
   }
 }
 
+const WhiteBorderTextField = styled(TextField)`
+  & label.Mui-focused {
+    color: white;
+  }
+  & .MuiOutlinedInput-root {
+    &.Mui-focused fieldset {
+      border-color: white;
+    }
+    &:hover fieldset {
+      border-color: white;
+    }
+  }
+  & .MuiOutlinedInput-notchedOutline {
+    border-color: white;
+  }
+`;
+
 const CoursePage = () => {
   const [openNewAssignDialog, setOpenNewAssignDialog] = useState(false)
+  const [open, setOpen] = useState(false);
+
   const openAssign = () => {
     setOpenNewAssignDialog(true)
+  }
+
+  const openDetails = () => {
+    setOpen(!open)
   }
 
   const token = useSelector(state => {
@@ -100,7 +127,7 @@ const CoursePage = () => {
         assignments.map((assign) =>
           <Grid item key={assign._id} sx={{width: "100%"}} display="flex" justifyContent="center">
             <Card sx={{width: "100%", maxWidth: 1015, backgroundColor: "rgb(35, 35, 35)"}}>
-                <CardActionArea>
+                <CardActionArea onClick={openDetails}>
                 <Box display="flex" sx={{height: 85}}>
                   <Grid container>
                     <Grid item sx={{height: "100%"}} display="flex" justifyContent="center" alignItems="center">
@@ -123,6 +150,19 @@ const CoursePage = () => {
                   </Grid>
                 </Box>
               </CardActionArea>
+              {open &&
+              <CardContent>
+                <Grid container display="flex" flexDirection="column" spacing={2}>
+                  <Grid item>
+                    <Typography color="white">Notes</Typography>
+                    <WhiteBorderTextField fullWidth InputProps={{style: {color: "white"}}} sx={{input: {color: "white"}}} multiline/>
+                  </Grid>
+                  <Grid item>
+                    <Button sx={{backgroundColor: "rgb(25, 25, 25)", color: "white"}}>Complete</Button>
+                  </Grid>
+                </Grid>
+              </CardContent>
+              }
             </Card>
           </Grid>
         )
