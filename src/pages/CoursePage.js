@@ -9,7 +9,8 @@ import {
   Avatar,
   IconButton,
   TextField,
-  Button
+  Button,
+  Grow,
 } from "@mui/material"
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import AddIcon from "@mui/icons-material/Add"
@@ -27,9 +28,9 @@ const dateDisplay = (date) => {
   const duedate = parseISO(date)
   //console.log("DUE: ", duedate)
   const diff = differenceInDays(duedate, today)
-  //console.log(date, "A", duedate, today)
+  console.log(date, "A", duedate, today)
   if (isBefore(duedate, today) && !isToday(duedate, today)) {
-    return "Due " + date.split("T")[0] + " (Late)"
+    return "Due " + format(duedate, "MM-dd-yy") + " (Late)"
   }
   if (diff === 0) {
     return "Due Today"
@@ -38,8 +39,13 @@ const dateDisplay = (date) => {
   } else if (diff < 7 && diff > 0) {
     return "Due " + format(duedate, "EEEE")
   } else {
-    return "Due " + date.split("T")[0]
+    console.log(duedate)
+    return "Due " + format(duedate, "MM-dd-yy")
   }
+}
+
+const timeDisplay = (assignment) => {
+  return format(parseISO(assignment.due), "h:m a")
 }
 
 const WhiteBorderTextField = styled(TextField)`
@@ -60,15 +66,25 @@ const WhiteBorderTextField = styled(TextField)`
 `;
 
 const CoursePage = () => {
+  let counter = 1;
   const [openNewAssignDialog, setOpenNewAssignDialog] = useState(false)
   const [open, setOpen] = useState(false);
+  const [assignID, setAssignID] = useState(false);
 
   const openAssign = () => {
     setOpenNewAssignDialog(true)
   }
 
-  const openDetails = () => {
-    setOpen(!open)
+  const openDetails = (id) => {
+    return (event) => {
+      if (id === assignID){
+        setOpen(false)
+        setAssignID(undefined)
+      } else {
+        setOpen(true)
+        setAssignID(id)
+      }
+    }
   }
 
   const token = useSelector(state => {
@@ -124,10 +140,12 @@ const CoursePage = () => {
         </Card>
       </Grid>
       {
-        assignments.map((assign) =>
+        assignments.map((assign) => { counter = counter + 1;
+          return (
+          <Grow key={assign._id} in={true} timeout={1000 + counter * 500}>
           <Grid item key={assign._id} sx={{width: "100%"}} display="flex" justifyContent="center">
             <Card sx={{width: "100%", maxWidth: 1015, backgroundColor: "rgb(35, 35, 35)"}}>
-                <CardActionArea onClick={openDetails}>
+                <CardActionArea onClick={openDetails(assign._id)}>
                 <Box display="flex" sx={{height: 85}}>
                   <Grid container>
                     <Grid item sx={{height: "100%"}} display="flex" justifyContent="center" alignItems="center">
@@ -144,27 +162,30 @@ const CoursePage = () => {
                     </Grid>
                     <Grid item sx={{height: "100%"}} display="flex" justifyContent="flex-start" alignItems="center">
                       <Box display="flex" justifyContent="flex-start" alignItems="center" sx={{height: "100%", marginLeft: "auto", mr: 1}} fullWidth>
-                        <Typography color="white" variant="caption" sx={{width: "120%", overflowWrap: "break-word"}}>{dateDisplay(assign.due.slice('T'))}</Typography>
+                        <Typography color="white" variant="caption" sx={{width: "120%", overflowWrap: "break-word"}}>{dateDisplay(assign.due) + " - " + timeDisplay(assign)}</Typography>
                       </Box>
                     </Grid>
                   </Grid>
                 </Box>
               </CardActionArea>
-              {open &&
+              {open && assignID === assign._id &&
               <CardContent>
                 <Grid container display="flex" flexDirection="column" spacing={2}>
                   <Grid item>
-                    <Typography color="white">Notes</Typography>
+                    <Typography color="white" variant="subtitle" sx={{fontWeight: "bold"}}>Details</Typography>
                     <WhiteBorderTextField fullWidth InputProps={{style: {color: "white"}}} sx={{input: {color: "white"}}} multiline/>
                   </Grid>
-                  <Grid item>
-                    <Button sx={{backgroundColor: "rgb(25, 25, 25)", color: "white"}}>Complete</Button>
+                  <Grid item display="flex">
+                    <Button sx={{backgroundColor: "rgb(25, 25, 25)", color: "white", mr: 2}}>Save Details</Button>
+                    <Button sx={{backgroundColor: "rgb(25, 25, 25)", color: "white", mr: 2}}>Complete Assignment</Button>
                   </Grid>
                 </Grid>
               </CardContent>
               }
             </Card>
           </Grid>
+          </Grow>
+          )}
         )
       }
     </Grid>
