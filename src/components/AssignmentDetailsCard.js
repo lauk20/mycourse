@@ -91,21 +91,21 @@ const AssignmentDetailsCard = ({ assign, counter }) => {
               </Box>
           </CardActionArea>
           {open &&
-          <Grow in={true} timeout={1000}>
           <CardContent>
-            <Grid container display="flex" flexDirection="column" spacing={2}>
-              <Grid item>
-                <Typography color="white" variant="subtitle" sx={{fontWeight: "bold"}}>Details</Typography>
-                <WhiteBorderTextField fullWidth InputProps={{style: {color: "white"}}} sx={{input: {color: "white"}}} multiline/>
+            <Grow in={open} timeout={1000}>
+              <Grid container display="flex" flexDirection="column" spacing={2}>
+                <Grid item>
+                  <Typography color="white" variant="subtitle" sx={{fontWeight: "bold"}}>Details</Typography>
+                  <WhiteBorderTextField fullWidth InputProps={{style: {color: "white"}}} sx={{input: {color: "white"}}} multiline/>
+                </Grid>
+                <Grid item display="flex">
+                  <Button sx={{backgroundColor: "rgb(25, 25, 25)", color: "white", mr: 2}}>Save Details</Button>
+                  <Button sx={{backgroundColor: "rgb(25, 25, 25)", color: "white", mr: 2}}>Complete Assignment</Button>
+                </Grid>
               </Grid>
-              <Grid item display="flex">
-                <Button sx={{backgroundColor: "rgb(25, 25, 25)", color: "white", mr: 2}}>Save Details</Button>
-                <Button sx={{backgroundColor: "rgb(25, 25, 25)", color: "white", mr: 2}}>Complete Assignment</Button>
-              </Grid>
-            </Grid>
+            </Grow>
           </CardContent>
-          </Grow>
-          }
+        }
         </Card>
       </Grid>
     </Grow>
