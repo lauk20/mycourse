@@ -17,6 +17,7 @@ import { differenceInDays, format, isBefore, isToday, parseISO } from "date-fns"
 const dateDisplay = (date) => {
   const today = parseISO(format(new Date(), "yyy-MM-dd"));
   const duedate = parseISO(date)
+  //console.log(date)
   //console.log("DUE: ", duedate)
   const diff = differenceInDays(duedate, today)
   //console.log(date, "A", duedate, today)
@@ -53,7 +54,7 @@ const CourseCard = ({ title, courseID, course}) => {
 
   const assignmentsObj = { };
   assignments.forEach((assign) => {
-    const date = assign.due.split("T")[0]
+    const date = format(new Date(assign.due), "yyyy-MM-dd")
     if (assignmentsObj[date]) {
       assignmentsObj[date].push(assign)
     } else {
