@@ -143,47 +143,47 @@ const CoursePage = () => {
         assignments.map((assign) => { counter = counter + 1;
           return (
           <Grow key={assign._id} in={true} timeout={1000 + counter * 500}>
-          <Grid item key={assign._id} sx={{width: "100%"}} display="flex" justifyContent="center">
-            <Card sx={{width: "100%", maxWidth: 1015, backgroundColor: "rgb(35, 35, 35)"}}>
-                <CardActionArea onClick={openDetails(assign._id)}>
-                <Box display="flex" sx={{height: 85}}>
-                  <Grid container>
-                    <Grid item sx={{height: "100%"}} display="flex" justifyContent="center" alignItems="center">
-                      <Box display="flex" justifyContent="center" alignItems="center" sx={{ml: 1}}>
-                        <Avatar sx={{width: "100", height: "100", backgroundColor: "rgb(25, 25, 25)"}}>
-                          <AssignmentIcon variant="large" sx={{color: "white"}}/>
-                        </Avatar>
-                      </Box>
+            <Grid item key={assign._id} sx={{width: "100%"}} display="flex" justifyContent="center">
+              <Card sx={{width: "100%", maxWidth: 1015, backgroundColor: "rgb(35, 35, 35)"}}>
+                  <CardActionArea onClick={openDetails(assign._id)}>
+                    <Box display="flex" sx={{height: 85}}>
+                      <Grid container>
+                        <Grid item sx={{height: "100%"}} display="flex" justifyContent="center" alignItems="center">
+                          <Box display="flex" justifyContent="center" alignItems="center" sx={{ml: 1}}>
+                            <Avatar sx={{width: "100", height: "100", backgroundColor: "rgb(25, 25, 25)"}}>
+                              <AssignmentIcon variant="large" sx={{color: "white"}}/>
+                            </Avatar>
+                          </Box>
+                        </Grid>
+                        <Grid item sx={{height: "100%"}} display="flex" justifyContent="flex-start" alignItems="center" xs>
+                          <Box display="flex" justifyContent="flex-start" alignItems="center" sx={{width: "85%", ml: 1}} fullWidth>
+                            <Typography color="white" variant="subtitle" sx={{width: "100%", fontWeight:"bold"}}>{assign.content}</Typography>
+                          </Box>
+                        </Grid>
+                        <Grid item sx={{height: "100%"}} display="flex" justifyContent="flex-start" alignItems="center">
+                          <Box display="flex" justifyContent="flex-start" alignItems="center" sx={{height: "100%", marginLeft: "auto", mr: 1}} fullWidth>
+                            <Typography color="white" variant="caption" sx={{width: "120%", overflowWrap: "break-word"}}>{dateDisplay(assign.due) + " - " + timeDisplay(assign)}</Typography>
+                          </Box>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                </CardActionArea>
+                {open && assignID === assign._id &&
+                <CardContent>
+                  <Grid container display="flex" flexDirection="column" spacing={2}>
+                    <Grid item>
+                      <Typography color="white" variant="subtitle" sx={{fontWeight: "bold"}}>Details</Typography>
+                      <WhiteBorderTextField fullWidth InputProps={{style: {color: "white"}}} sx={{input: {color: "white"}}} multiline/>
                     </Grid>
-                    <Grid item sx={{height: "100%"}} display="flex" justifyContent="flex-start" alignItems="center" xs>
-                      <Box display="flex" justifyContent="flex-start" alignItems="center" sx={{width: "85%", ml: 1}} fullWidth>
-                        <Typography color="white" variant="subtitle" sx={{width: "100%", fontWeight:"bold"}}>{assign.content}</Typography>
-                      </Box>
-                    </Grid>
-                    <Grid item sx={{height: "100%"}} display="flex" justifyContent="flex-start" alignItems="center">
-                      <Box display="flex" justifyContent="flex-start" alignItems="center" sx={{height: "100%", marginLeft: "auto", mr: 1}} fullWidth>
-                        <Typography color="white" variant="caption" sx={{width: "120%", overflowWrap: "break-word"}}>{dateDisplay(assign.due) + " - " + timeDisplay(assign)}</Typography>
-                      </Box>
+                    <Grid item display="flex">
+                      <Button sx={{backgroundColor: "rgb(25, 25, 25)", color: "white", mr: 2}}>Save Details</Button>
+                      <Button sx={{backgroundColor: "rgb(25, 25, 25)", color: "white", mr: 2}}>Complete Assignment</Button>
                     </Grid>
                   </Grid>
-                </Box>
-              </CardActionArea>
-              {open && assignID === assign._id &&
-              <CardContent>
-                <Grid container display="flex" flexDirection="column" spacing={2}>
-                  <Grid item>
-                    <Typography color="white" variant="subtitle" sx={{fontWeight: "bold"}}>Details</Typography>
-                    <WhiteBorderTextField fullWidth InputProps={{style: {color: "white"}}} sx={{input: {color: "white"}}} multiline/>
-                  </Grid>
-                  <Grid item display="flex">
-                    <Button sx={{backgroundColor: "rgb(25, 25, 25)", color: "white", mr: 2}}>Save Details</Button>
-                    <Button sx={{backgroundColor: "rgb(25, 25, 25)", color: "white", mr: 2}}>Complete Assignment</Button>
-                  </Grid>
-                </Grid>
-              </CardContent>
-              }
-            </Card>
-          </Grid>
+                </CardContent>
+                }
+              </Card>
+            </Grid>
           </Grow>
           )}
         )
