@@ -169,6 +169,7 @@ const CoursePage = () => {
                     </Box>
                 </CardActionArea>
                 {open && assignID === assign._id &&
+                <Grow in={true} timeout={1000}>
                 <CardContent>
                   <Grid container display="flex" flexDirection="column" spacing={2}>
                     <Grid item>
@@ -181,6 +182,7 @@ const CoursePage = () => {
                     </Grid>
                   </Grid>
                 </CardContent>
+                </Grow>
                 }
               </Card>
             </Grid>
