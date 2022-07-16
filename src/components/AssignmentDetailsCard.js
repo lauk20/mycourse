@@ -7,6 +7,7 @@ import {
   Typography,
   Avatar,
   Button,
+  Slide,
   Grow,
 } from "@mui/material"
 import AssignmentIcon from '@mui/icons-material/Assignment';
@@ -38,14 +39,14 @@ const timeDisplay = (assignment) => {
   return format(parseISO(assignment.due), "hh:mm a")
 }
 
-const AssignmentDetailsCard = ({ assign, counter }) => {
+const AssignmentDetailsCard = ({ assign }) => {
   const [open, setOpen] = useState(false);
   const openDetails = () => {
     setOpen(!open)
   }
 
   return (
-    <Grow in={true} timeout={1000 + counter * 500}>
+    <Slide in={true} timeout={1000} direction="up">
       <Grid item sx={{width: "100%"}} display="flex" justifyContent="center">
         <Card sx={{width: "100%", maxWidth: 1015, backgroundColor: "rgb(35, 35, 35)"}}>
             <CardActionArea onClick={openDetails}>
@@ -93,7 +94,7 @@ const AssignmentDetailsCard = ({ assign, counter }) => {
         }
         </Card>
       </Grid>
-    </Grow>
+    </Slide>
   )
 }
 
