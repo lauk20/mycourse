@@ -12,8 +12,10 @@ import {
 } from "@mui/material"
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { useState } from "react"
+import { useDispatch } from "react-redux"
 import { differenceInDays, format, isBefore, isToday, parseISO } from "date-fns"
 import { styled } from "@mui/material/styles"
+import { updateDetails } from "../reducers/assignmentReducers"
 
 const dateDisplay = (date) => {
   const today = parseISO(format(new Date(), "yyy-MM-dd"));
@@ -63,9 +65,16 @@ const AssignmentDetailsCard = ({ assign, counter }) => {
     setOpen(!open)
   }
 
+  const dispatch = useDispatch();
+  const [details, setDetails] = useState(assign.details);
+
+  const saveDetails = () => {
+    dispatch(updateDetails(assign._id, details))
+  }
+  console.log(assign)
   return (
-    <Grow key={assign._id} in={true} timeout={1000 + counter * 500}>
-      <Grid item key={assign._id} sx={{width: "100%"}} display="flex" justifyContent="center">
+    <Grow in={true} timeout={1000 + counter * 500}>
+      <Grid item sx={{width: "100%"}} display="flex" justifyContent="center">
         <Card sx={{width: "100%", maxWidth: 1015, backgroundColor: "rgb(35, 35, 35)"}}>
             <CardActionArea onClick={openDetails}>
               <Box display="flex" sx={{height: 85}}>
@@ -96,10 +105,10 @@ const AssignmentDetailsCard = ({ assign, counter }) => {
               <Grid container display="flex" flexDirection="column" spacing={2}>
                 <Grid item>
                   <Typography color="white" variant="subtitle" sx={{fontWeight: "bold"}}>Details</Typography>
-                  <WhiteBorderTextField fullWidth InputProps={{style: {color: "white"}}} sx={{input: {color: "white"}}} multiline/>
+                  <WhiteBorderTextField onChange={(event) => setDetails(event.target.value)} fullWidth InputProps={{style: {color: "white"}}} sx={{input: {color: "white"}}} multiline/>
                 </Grid>
                 <Grid item display="flex">
-                  <Button sx={{backgroundColor: "rgb(25, 25, 25)", color: "white", mr: 2}}>Save Details</Button>
+                  <Button onClick={saveDetails} sx={{backgroundColor: "rgb(25, 25, 25)", color: "white", mr: 2}}>Save Details</Button>
                   <Button sx={{backgroundColor: "rgb(25, 25, 25)", color: "white", mr: 2}}>Complete Assignment</Button>
                 </Grid>
               </Grid>

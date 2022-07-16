@@ -18,6 +18,12 @@ const addAssignment = async (contents, date, courseID) => {
   return response.data
 }
 
-const services = { getAssignments, addAssignment }
+const updateDetails = async (assignID, details) => {
+  const response = await axios.put(url + "/" + assignID.toString(), { details: details });
+
+  return response.data
+}
+
+const services = { getAssignments, addAssignment, updateDetails }
 
 export default services

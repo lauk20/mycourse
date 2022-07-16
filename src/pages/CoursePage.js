@@ -76,11 +76,12 @@ const CoursePage = () => {
         </Card>
       </Grid>
       {
-        assignments.map((assign) => { counter = counter + 1;
+        assignments.map((assign) => {
+          counter = counter + 1;
           return (
-            <AssignmentDetailsCard assign={assign} counter={counter}/>
-          )}
-        )
+            <AssignmentDetailsCard key={assign._id} assign={assign} counter={counter}/>
+          )
+        })
       }
     </Grid>
     <NewAssignmentDialog openNewAssignDialog={openNewAssignDialog} setOpenNewAssignDialog={setOpenNewAssignDialog} courseID={courseID}/>
