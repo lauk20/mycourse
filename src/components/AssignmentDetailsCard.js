@@ -6,16 +6,12 @@ import {
   Box,
   Typography,
   Avatar,
-  TextField,
   Button,
   Grow,
 } from "@mui/material"
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { useState } from "react"
-import { useDispatch } from "react-redux"
 import { differenceInDays, format, isBefore, isToday, parseISO } from "date-fns"
-import { styled } from "@mui/material/styles"
-import { updateDetails } from "../reducers/assignmentReducers"
 
 const dateDisplay = (date) => {
   const today = parseISO(format(new Date(), "yyy-MM-dd"));
@@ -42,36 +38,12 @@ const timeDisplay = (assignment) => {
   return format(parseISO(assignment.due), "hh:mm a")
 }
 
-const WhiteBorderTextField = styled(TextField)`
-  & label.Mui-focused {
-    color: white;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: white;
-    }
-    &:hover fieldset {
-      border-color: white;
-    }
-  }
-  & .MuiOutlinedInput-notchedOutline {
-    border-color: white;
-  }
-`;
-
 const AssignmentDetailsCard = ({ assign, counter }) => {
   const [open, setOpen] = useState(false);
   const openDetails = () => {
     setOpen(!open)
   }
 
-  const dispatch = useDispatch();
-  const [details, setDetails] = useState(assign.details);
-
-  const saveDetails = () => {
-    dispatch(updateDetails(assign._id, details))
-  }
-  console.log(assign)
   return (
     <Grow in={true} timeout={1000 + counter * 500}>
       <Grid item sx={{width: "100%"}} display="flex" justifyContent="center">
@@ -105,10 +77,14 @@ const AssignmentDetailsCard = ({ assign, counter }) => {
               <Grid container display="flex" flexDirection="column" spacing={2}>
                 <Grid item>
                   <Typography color="white" variant="subtitle" sx={{fontWeight: "bold"}}>Details</Typography>
-                  <WhiteBorderTextField value={details} onChange={(event) => setDetails(event.target.value)} minRows={3} fullWidth InputProps={{style: {color: "white"}}} sx={{input: {color: "white"}}} multiline/>
+                  <Typography>{assign.details}</Typography>
+                </Grid>
+                <Grid item>
+                  <Typography color="white" variant="subtitle" sx={{fontWeight: "bold"}}>Due Date</Typography>
+                  <Typography>{dateDisplay(assign.due).split("Due")[1] + " - " + timeDisplay(assign)}</Typography>
                 </Grid>
                 <Grid item display="flex">
-                  <Button onClick={saveDetails} sx={{backgroundColor: "rgb(25, 25, 25)", color: "white", mr: 2}}>Save Details</Button>
+                  <Button sx={{backgroundColor: "rgb(25, 25, 25)", color: "white", mr: 2}}>Edit Assignment</Button>
                   <Button sx={{backgroundColor: "rgb(25, 25, 25)", color: "white", mr: 2}}>Complete Assignment</Button>
                 </Grid>
               </Grid>

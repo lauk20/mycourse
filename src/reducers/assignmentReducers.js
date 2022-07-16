@@ -13,6 +13,8 @@ const assignmentSlice = createSlice({
         if (assign._id === action.payload.id) {
           return {...assign, details: action.payload.details}
         }
+
+        return assign;
       })
 
       return newState
@@ -20,9 +22,9 @@ const assignmentSlice = createSlice({
   }
 })
 
-export const createAssignment = (name, date, courseID) => {
+export const createAssignment = (name, date, courseID, details) => {
   return async dispatch => {
-    const assignment = await assignmentAPI.addAssignment(name, date, courseID);
+    const assignment = await assignmentAPI.addAssignment(name, date, courseID, details);
     dispatch(addAssignment(assignment))
 
     return assignment;

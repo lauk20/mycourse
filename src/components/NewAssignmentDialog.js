@@ -13,7 +13,7 @@ import Stack from "@mui/material/Stack"
 import { styled } from "@mui/material/styles"
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker"
+import { DatePicker } from "@mui/x-date-pickers/DatePicker"
 import { TimePicker } from "@mui/x-date-pickers/TimePicker"
 
 const WhiteBorderTextField = styled(TextField)`
@@ -33,58 +33,9 @@ const WhiteBorderTextField = styled(TextField)`
   }
 `;
 
-const popperstyles = {
-  "& .MuiPaper-root": {
-    backgroundColor: "#0e0e0e",
-    color: "white",
-  },
-  "& .MuiPickersArrowSwitcher-button": {
-    color: "white",
-  },
-  "& .MuiIconButton-root": {
-    color: "white"
-  },
-  "& .MuiPickersDay-dayWithMargin": {
-    color: "white",
-    backgroundColor: "black",
-  },
-  "& .MuiPickersDay-dayWithMargin:hover": {
-    color: "white",
-    backgroundColor: "rgb(35, 35, 35)",
-  },
-  "& .css-1flhz3h": {
-    color: "white"
-  },
-  "& .css-qrabyo": {
-    backgroundColor: "white"
-  },
-  "& .css-vq8oi5": {
-    border: "16px solid",
-    borderColor: "rgb(35, 35, 35)"
-  },
-  "& .css-6hrdyi": {
-    backgroundColor: "white"
-  },
-}
-
-const timepopperstyles = {
-  "& .MuiPaper-root": {
-    backgroundColor: "#0e0e0e",
-    color: "white",
-  },
-  "& .MuiPickersArrowSwitcher-button": {
-    color: "white",
-  },
-  "& .MuiIconButton-root": {
-    color: "white"
-  },
-  "& .css-1flhz3h": {
-    color: "white"
-  }
-}
-
 const NewAssignmentDialog = ({openNewAssignDialog, setOpenNewAssignDialog, courseID})=> {
   const [name, setName] = useState("");
+  const [details, setDetails] = useState("");
   const [date, setDate] = useState(new Date());
 
   const dispatch = useDispatch()
@@ -92,7 +43,7 @@ const NewAssignmentDialog = ({openNewAssignDialog, setOpenNewAssignDialog, cours
     if (name !== "" && openNewAssignDialog) {
       setOpenNewAssignDialog(false)
       console.log(name, courseID)
-      const assignment = await dispatch(createAssignment(name, date, courseID))
+      const assignment = await dispatch(createAssignment(name, date, courseID, details))
       console.log(assignment)
       //dispatch(newAssignment({content: name, due: date.toString(), course: courseID}))
       dispatch(newAssignment(assignment))
@@ -107,11 +58,12 @@ const NewAssignmentDialog = ({openNewAssignDialog, setOpenNewAssignDialog, cours
           <DialogContentText sx={{mb: 2}}>Add a new assignment to your this course</DialogContentText>
           <Stack spacing={3}>
             <WhiteBorderTextField autoFocus id="name" label="Assignment Name" fullWidth value={name} onChange={(event) => {setName(event.target.value)}} sx={{svg: {color:"white"}, label: {color: "white"}, input: {color: "white"}}}/>
-            <DesktopDatePicker label="Assignment Due Date" value={date} onChange={setDate} PopperProps={{sx:popperstyles}} sx={{input: {color: "white"}}}
+            <WhiteBorderTextField id="details" label="Assignment Details" fullWidth value={details} onChange={(event) => {setDetails(event.target.value)}} sx={{svg: {color:"white"}, label: {color: "white"}, input: {color: "white"}}}/>
+            <DatePicker label="Assignment Due Date" value={date} onChange={setDate} sx={{input: {color: "white"}}}
               renderInput={(params) =>
                 <WhiteBorderTextField {...params} sx={{svg: {color:"white"}, label: {color: "white"}, input: {color: "white"}}}/>}
             />
-            <TimePicker label="Due Time" value={date} onChange={setDate} PopperProps={{sx: timepopperstyles}}
+            <TimePicker label="Due Time" value={date} onChange={setDate}
               renderInput={(params) =>
                 <WhiteBorderTextField {...params} sx={{svg: {color:"white"}, label: {color: "white"}, input: {color: "white"}}}/>}
             />

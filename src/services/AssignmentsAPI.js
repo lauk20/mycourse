@@ -7,11 +7,12 @@ const getAssignments = async () => {
   return response.data
 }
 
-const addAssignment = async (contents, date, courseID) => {
+const addAssignment = async (contents, date, courseID, details) => {
   const assignment = {
     content: contents,
     due: date,
-    course: courseID
+    course: courseID,
+    details: details
   }
   const response = await axios.post(url, assignment);
 
