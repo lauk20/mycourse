@@ -39,7 +39,7 @@ const dateDisplay = (date) => {
 }
 
 const timeDisplay = (assignment) => {
-  return format(parseISO(assignment.due), "h:m a")
+  return format(parseISO(assignment.due), "hh:mm a")
 }
 
 const WhiteBorderTextField = styled(TextField)`

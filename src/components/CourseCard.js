@@ -36,7 +36,7 @@ const dateDisplay = (date) => {
 }
 
 const assignmentDateDisplay = (assignment) => {
-  return format(parseISO(assignment.due), "h:m a") + " - " + assignment.content
+  return format(parseISO(assignment.due), "hh:mm a") + " - " + assignment.content
 }
 
 const CourseCard = ({ title, courseID, course}) => {
