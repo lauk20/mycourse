@@ -105,7 +105,7 @@ const AssignmentDetailsCard = ({ assign, counter }) => {
               <Grid container display="flex" flexDirection="column" spacing={2}>
                 <Grid item>
                   <Typography color="white" variant="subtitle" sx={{fontWeight: "bold"}}>Details</Typography>
-                  <WhiteBorderTextField onChange={(event) => setDetails(event.target.value)} fullWidth InputProps={{style: {color: "white"}}} sx={{input: {color: "white"}}} multiline/>
+                  <WhiteBorderTextField value={details} onChange={(event) => setDetails(event.target.value)} minRows={3} fullWidth InputProps={{style: {color: "white"}}} sx={{input: {color: "white"}}} multiline/>
                 </Grid>
                 <Grid item display="flex">
                   <Button onClick={saveDetails} sx={{backgroundColor: "rgb(25, 25, 25)", color: "white", mr: 2}}>Save Details</Button>
