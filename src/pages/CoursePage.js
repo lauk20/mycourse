@@ -77,9 +77,8 @@ const CoursePage = () => {
       </Grid>
       {
         assignments.map((assign) => {
-          counter = counter + 1;
           return (
-            <AssignmentDetailsCard key={assign._id} assign={assign} counter={counter}/>
+            <AssignmentDetailsCard key={assign._id} assign={assign}/>
           )
         })
       }
