@@ -16,7 +16,6 @@ import { useSelector, useDispatch } from "react-redux"
 import { initializeCourses } from "../reducers/courseReducers"
 
 const CoursePage = () => {
-  let counter = 1;
   const [openNewAssignDialog, setOpenNewAssignDialog] = useState(false)
 
   const openAssign = () => {
