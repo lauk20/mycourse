@@ -32,7 +32,7 @@ const WhiteBorderTextField = styled(TextField)`
   }
 `;
 
-const EditAssignmentDialog = ({openEditAssignDialog, setOpenEditAssignDialog, assignment, courseID})=> {
+const EditAssignmentDialog = ({openEditAssignDialog, setOpenEditAssignDialog, assignment, setAssignContent, setAssignDetails, setAssignDue})=> {
   /*
   const course = useSelector(state => {
     const courses = state.courses;
@@ -49,18 +49,14 @@ const EditAssignmentDialog = ({openEditAssignDialog, setOpenEditAssignDialog, as
   const [details, setDetails] = useState(assignment.details || "");
   const [date, setDate] = useState(assignment.due);
 
-  if (name !== assignment.content) {
-    setName(assignment.content);
-    setDetails(assignment.details);
-    setDate(assignment.due)
-  }
-
-  console.log("render")
   const dispatch = useDispatch()
   const updateAssignmentOnClick = async () => {
     if (openEditAssignDialog) {
       setOpenEditAssignDialog(false)
-      const assign = await dispatch(updateAssignment({content: name, details: details, due: date, _id: assignment._id}));
+      const assign = await dispatch(updateAssignment({content: name, details: details, due: date.toISOString(), _id: assignment._id}));
+      setAssignContent(name)
+      setAssignDetails(details)
+      setAssignDue(date.toISOString())
     }
   }
 
