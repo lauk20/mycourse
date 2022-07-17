@@ -85,7 +85,7 @@ const CoursePage = () => {
         })
       }
     </Grid>
-    <NewAssignmentDialog openNewAssignDialog={openNewAssignDialog} setOpenNewAssignDialog={setOpenNewAssignDialog} courseID={courseID}/>
+    <NewAssignmentDialog openNewAssignDialog={openNewAssignDialog} setOpenNewAssignDialog={setOpenNewAssignDialog} courseID={courseID} course={course.name}/>
     {selectedAssignment &&
       <EditAssignmentDialog openEditAssignDialog={openEditAssignDialog} setOpenEditAssignDialog={setOpenEditAssignDialog} assignment={selectedAssignment} courseID={courseID}/>
     }
