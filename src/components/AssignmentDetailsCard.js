@@ -11,15 +11,17 @@ import {
   Grow,
 } from "@mui/material"
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useSelector } from "react-redux"
 import { differenceInDays, format, isBefore, isToday, parseISO } from "date-fns"
+import EditAssignmentDialog from "./EditAssignmentDialog"
 
 const dateDisplay = (date) => {
   const today = parseISO(format(new Date(), "yyy-MM-dd"));
   const duedate = parseISO(date)
   //console.log("DUE: ", duedate)
   const diff = differenceInDays(duedate, today)
-  console.log(date, "A", duedate, today)
+  //console.log(date, "A", duedate, today)
   if (isBefore(duedate, today) && !isToday(duedate, today)) {
     return "Due " + format(duedate, "MM-dd-yy") + " (Late)"
   }
@@ -30,7 +32,7 @@ const dateDisplay = (date) => {
   } else if (diff < 7 && diff > 0) {
     return "Due " + format(duedate, "EEEE")
   } else {
-    console.log(duedate)
+    //console.log(duedate)
     return "Due " + format(duedate, "MM-dd-yy")
   }
 }
@@ -39,7 +41,7 @@ const timeDisplay = (assignment) => {
   return format(parseISO(assignment.due), "hh:mm a")
 }
 
-const AssignmentDetailsCard = ({ assign }) => {
+const AssignmentDetailsCard = ({ assign, setOpenEditAssignDialog, setSelectedAssignment }) => {
   const [open, setOpen] = useState(false);
   const openDetails = () => {
     setOpen(!open)
@@ -85,7 +87,7 @@ const AssignmentDetailsCard = ({ assign }) => {
                   <Typography>{dateDisplay(assign.due).split("Due")[1] + " - " + timeDisplay(assign)}</Typography>
                 </Grid>
                 <Grid item display="flex">
-                  <Button sx={{backgroundColor: "rgb(25, 25, 25)", color: "white", mr: 2}}>Edit Assignment</Button>
+                  <Button onClick={() => {setSelectedAssignment(assign); setOpenEditAssignDialog(true);}} sx={{backgroundColor: "rgb(25, 25, 25)", color: "white", mr: 2}}>Edit Assignment</Button>
                   <Button sx={{backgroundColor: "rgb(25, 25, 25)", color: "white", mr: 2}}>Complete Assignment</Button>
                 </Grid>
               </Grid>

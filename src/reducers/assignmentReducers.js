@@ -18,6 +18,22 @@ const assignmentSlice = createSlice({
       })
 
       return newState
+    },
+    setAssignment(state, action){
+      const newState = state.map(assign => {
+        if (assign._id === action.payload._id) {
+          assign.content = action.payload.content;
+          assign.details = action.payload.details;
+          assign.due = action.payload.due;
+        }
+
+        return assign;
+      })
+
+      return newState
+    },
+    setAssignments(state, action) {
+      return action.payload
     }
   }
 })
@@ -40,5 +56,23 @@ export const updateDetails = (assignmentID, details) => {
   }
 }
 
-export const { addAssignment, setDetails } = assignmentSlice.actions
+export const updateAssignment = (newAssignmentObj) => {
+  return async dispatch => {
+    const assignment = await assignmentAPI.updateAssignment(newAssignmentObj);
+    dispatch(setAssignment(newAssignmentObj))
+
+    return assignment;
+  }
+}
+
+export const initializeAssignments = () => {
+  return async dispatch => {
+    const assignments = await assignmentAPI.getAssignments();
+    dispatch(setAssignments(assignments))
+
+    return assignments;
+  }
+}
+
+export const { addAssignment, setDetails, setAssignment, setAssignments } = assignmentSlice.actions
 export default assignmentSlice.reducer

@@ -9,6 +9,7 @@ import {
 import AddIcon from "@mui/icons-material/Add"
 import SettingsIcon from "@mui/icons-material/Settings"
 import NewAssignmentDialog from "../components/NewAssignmentDialog"
+import EditAssignmentDialog from "../components/EditAssignmentDialog"
 import AssignmentDetailsCard from "../components/AssignmentDetailsCard"
 import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
@@ -17,6 +18,8 @@ import { initializeCourses } from "../reducers/courseReducers"
 
 const CoursePage = () => {
   const [openNewAssignDialog, setOpenNewAssignDialog] = useState(false)
+  const [openEditAssignDialog, setOpenEditAssignDialog] = useState(false);
+  const [selectedAssignment, setSelectedAssignment] = useState(null);
 
   const openAssign = () => {
     setOpenNewAssignDialog(true)
@@ -77,12 +80,15 @@ const CoursePage = () => {
       {
         assignments.map((assign) => {
           return (
-            <AssignmentDetailsCard key={assign._id} assign={assign}/>
+            <AssignmentDetailsCard key={assign._id} assign={assign} setOpenEditAssignDialog={setOpenEditAssignDialog} setSelectedAssignment={setSelectedAssignment}/>
           )
         })
       }
     </Grid>
     <NewAssignmentDialog openNewAssignDialog={openNewAssignDialog} setOpenNewAssignDialog={setOpenNewAssignDialog} courseID={courseID}/>
+    {selectedAssignment &&
+      <EditAssignmentDialog openEditAssignDialog={openEditAssignDialog} setOpenEditAssignDialog={setOpenEditAssignDialog} assignment={selectedAssignment} courseID={courseID}/>
+    }
     </>
   )
 }
