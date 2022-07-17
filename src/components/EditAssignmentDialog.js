@@ -65,10 +65,10 @@ const EditAssignmentDialog = ({openEditAssignDialog, setOpenEditAssignDialog, as
       <Dialog open={openEditAssignDialog}>
         <DialogTitle sx={{backgroundColor: "rgb(35, 35, 35)", color: "white"}}>Edit Assignment</DialogTitle>
         <DialogContent sx={{backgroundColor: "rgb(35, 35, 35)"}}>
-          <DialogContentText sx={{mb: 2}}>Edit this assignment: {assignment.content}</DialogContentText>
+          <DialogContentText sx={{mb: 2}}>Edit this assignment's information: {assignment.content}</DialogContentText>
           <Stack spacing={3}>
-            <WhiteBorderTextField autoFocus id="name" label="Assignment Name" fullWidth value={name} onChange={(event) => {setName(event.target.value)}} sx={{svg: {color:"white"}, label: {color: "white"}, input: {color: "white"}}}/>
-            <WhiteBorderTextField id="details" label="Assignment Details" fullWidth value={details} onChange={(event) => {setDetails(event.target.value)}} sx={{svg: {color:"white"}, label: {color: "white"}, input: {color: "white"}}}/>
+            <WhiteBorderTextField InputLabelProps={{ shrink: true }} autoFocus id="name" label="Assignment Name" fullWidth value={name} onChange={(event) => {setName(event.target.value)}} sx={{svg: {color:"white"}, label: {color: "white"}, input: {color: "white"}}}/>
+            <WhiteBorderTextField multiline rows={3} InputLabelProps={{ shrink: true }} id="details" label="Assignment Details" fullWidth value={details} onChange={(event) => {setDetails(event.target.value)}} sx={{svg: {color:"white"}, label: {color: "white"}, input: {color: "white"}}}/>
             <DatePicker label="Assignment Due Date" value={date} onChange={setDate} sx={{input: {color: "white"}}}
               renderInput={(params) =>
                 <WhiteBorderTextField {...params} sx={{svg: {color:"white"}, label: {color: "white"}, input: {color: "white"}}}/>}

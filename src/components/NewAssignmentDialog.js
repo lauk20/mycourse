@@ -33,7 +33,7 @@ const WhiteBorderTextField = styled(TextField)`
   }
 `;
 
-const NewAssignmentDialog = ({openNewAssignDialog, setOpenNewAssignDialog, courseID})=> {
+const NewAssignmentDialog = ({openNewAssignDialog, setOpenNewAssignDialog, courseID, course})=> {
   const [name, setName] = useState("");
   const [details, setDetails] = useState("");
   const [date, setDate] = useState(new Date());
@@ -55,10 +55,10 @@ const NewAssignmentDialog = ({openNewAssignDialog, setOpenNewAssignDialog, cours
       <Dialog open={openNewAssignDialog}>
         <DialogTitle sx={{backgroundColor: "rgb(35, 35, 35)", color: "white"}}>Add New Assignment</DialogTitle>
         <DialogContent sx={{backgroundColor: "rgb(35, 35, 35)"}}>
-          <DialogContentText sx={{mb: 2}}>Add a new assignment to your this course</DialogContentText>
+          <DialogContentText sx={{mb: 2}}>Add a new assignment to this course: {course}</DialogContentText>
           <Stack spacing={3}>
-            <WhiteBorderTextField autoFocus id="name" label="Assignment Name" fullWidth value={name} onChange={(event) => {setName(event.target.value)}} sx={{svg: {color:"white"}, label: {color: "white"}, input: {color: "white"}}}/>
-            <WhiteBorderTextField id="details" label="Assignment Details" fullWidth value={details} onChange={(event) => {setDetails(event.target.value)}} sx={{svg: {color:"white"}, label: {color: "white"}, input: {color: "white"}}}/>
+            <WhiteBorderTextField autoFocus InputLabelProps={{ shrink: true }} id="name" label="Assignment Name" fullWidth value={name} onChange={(event) => {setName(event.target.value)}} sx={{svg: {color:"white"}, label: {color: "white"}, input: {color: "white"}}}/>
+            <WhiteBorderTextField multiline rows={3} InputLabelProps={{ shrink: true }} id="details" label="Assignment Details" fullWidth value={details} onChange={(event) => {setDetails(event.target.value)}} sx={{svg: {color:"white"}, label: {color: "white"}, input: {color: "white"}}}/>
             <DatePicker label="Assignment Due Date" value={date} onChange={setDate} sx={{input: {color: "white"}}}
               renderInput={(params) =>
                 <WhiteBorderTextField {...params} sx={{svg: {color:"white"}, label: {color: "white"}, input: {color: "white"}}}/>}
