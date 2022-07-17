@@ -22,9 +22,7 @@ const assignmentSlice = createSlice({
     setAssignment(state, action){
       const newState = state.map(assign => {
         if (assign._id === action.payload._id) {
-          assign.content = action.payload.content;
-          assign.details = action.payload.details;
-          assign.due = action.payload.due;
+          return action.payload
         }
 
         return assign;
