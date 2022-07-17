@@ -11,9 +11,8 @@ import {
   Grow,
 } from "@mui/material"
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import { useState, useEffect } from "react"
-import { useSelector } from "react-redux"
-import { differenceInDays, format, isBefore, isToday, parseISO } from "date-fns"
+import { useState } from "react"
+import { differenceInDays, format, isBefore, parseISO } from "date-fns"
 import EditAssignmentDialog from "./EditAssignmentDialog"
 
 const dateDisplay = (date) => {

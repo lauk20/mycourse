@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useSelector, useDispatch } from "react-redux"
+import { useDispatch } from "react-redux"
 import { updateAssignment } from "../reducers/assignmentReducers"
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -57,6 +57,8 @@ const EditAssignmentDialog = ({openEditAssignDialog, setOpenEditAssignDialog, as
       setAssignContent(name)
       setAssignDetails(details)
       setAssignDue(date.toISOString())
+
+      return assign
     }
   }
 
