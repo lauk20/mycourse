@@ -32,6 +32,9 @@ const assignmentSlice = createSlice({
     },
     setAssignments(state, action) {
       return action.payload
+    },
+    removeAssignment(state, action) {
+      state = state.filter(assign => assign._id !== action.payload)
     }
   }
 })
@@ -72,5 +75,12 @@ export const initializeAssignments = () => {
   }
 }
 
-export const { addAssignment, setDetails, setAssignment, setAssignments } = assignmentSlice.actions
+export const completeAssignment = (id) => {
+  return async dispatch => {
+    await assignmentAPI.completeAssignment(id);
+    dispatch(removeAssignment(id))
+  }
+}
+
+export const { addAssignment, setDetails, setAssignment, setAssignments, removeAssignment } = assignmentSlice.actions
 export default assignmentSlice.reducer
