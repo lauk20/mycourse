@@ -12,8 +12,10 @@ import {
 } from "@mui/material"
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { useState } from "react"
+import { useDispatch } from "react-redux"
 import { differenceInDays, format, isBefore, parseISO } from "date-fns"
 import EditAssignmentDialog from "./EditAssignmentDialog"
+import { completeAssignment }  from "../reducers/assignmentReducers"
 
 const dateDisplay = (date) => {
   const today = parseISO(format(new Date(), "yyy-MM-dd"));
@@ -62,6 +64,11 @@ const AssignmentDetailsCard = ({ assign }) => {
   const [details, setDetails] = useState(assign.details);
   const [due, setDue] = useState(assign.due)
 
+  const dispatch = useDispatch();
+  const completeAssignmentButton = async () => {
+    dispatch(completeAssignment(assign._id));
+  }
+
   return (
     <>
     <Slide in={true} timeout={1000} direction="up">
@@ -104,7 +111,7 @@ const AssignmentDetailsCard = ({ assign }) => {
                 </Grid>
                 <Grid item display="flex">
                   <Button onClick={() => {setOpenEditAssignDialog(true);}} sx={{backgroundColor: "rgb(25, 25, 25)", color: "white", mr: 2}}>Edit Assignment</Button>
-                  <Button sx={{backgroundColor: "rgb(25, 25, 25)", color: "white", mr: 2}}>Complete Assignment</Button>
+                  <Button sx={{backgroundColor: "rgb(25, 25, 25)", color: "white", mr: 2}} onClick={completeAssignmentButton}>Complete Assignment</Button>
                 </Grid>
               </Grid>
             </Grow>

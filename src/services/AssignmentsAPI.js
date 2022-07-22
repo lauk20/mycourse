@@ -32,6 +32,12 @@ const updateAssignment = async (assignment) => {
   return response.data
 }
 
-const services = { getAssignments, addAssignment, updateDetails, updateAssignment }
+const completeAssignment = async (id) => {
+  const response = await axios.delete(url + "/" + id.toString());
+
+  return response.data
+}
+
+const services = { getAssignments, addAssignment, updateDetails, updateAssignment, completeAssignment }
 
 export default services
