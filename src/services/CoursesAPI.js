@@ -21,6 +21,15 @@ const getCourses = async (token) => {
   return response.data
 }
 
+const getCourse = async (id, token) => {
+  authHeader = {
+    headers: { Authorization: "bearer " + token }
+  }
+  const response = await axios.get(url + "/" + id.toString(), authHeader);
+
+  return response.data;
+}
+
 const addCourse = async (courseTitle, token) => {
   authHeader = {
     headers: { Authorization: "bearer " + token }
@@ -34,6 +43,6 @@ const addCourse = async (courseTitle, token) => {
   return response.data
 }
 
-const services = { getCourses, addCourse, setToken }
+const services = { getCourses, getCourse, addCourse, setToken }
 
 export default services

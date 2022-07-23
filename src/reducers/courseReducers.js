@@ -38,6 +38,18 @@ const courseSlice = createSlice({
       return newState
       */
     },
+    removeAssignment(state, action) {
+      const newState = state.map(course => {
+        if (course._id === action.payload.course) {
+          const assigns = course.assignments.filter(a => a._id !== action.payload)
+          return {...course, assignments: assigns}
+        }
+
+        return course
+      })
+
+      return newState
+    },
   }
 })
 
@@ -55,5 +67,11 @@ export const createCourse = (title, token) => {
   }
 }
 
-export const { addCourse, setCourses, newAssignment } = courseSlice.actions
+export const getCourse = async (courseID, token) => {
+  const course = await courseAPI.getCourse(courseID, token);
+
+  return course;
+}
+
+export const { addCourse, setCourses, newAssignment, removeAssignment } = courseSlice.actions
 export default courseSlice.reducer

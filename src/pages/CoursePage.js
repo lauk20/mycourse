@@ -14,12 +14,14 @@ import AssignmentDetailsCard from "../components/AssignmentDetailsCard"
 import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
-import { initializeCourses } from "../reducers/courseReducers"
+import { initializeCourses, getCourse } from "../reducers/courseReducers"
 
 const CoursePage = () => {
   const [openNewAssignDialog, setOpenNewAssignDialog] = useState(false)
   const [openEditAssignDialog, setOpenEditAssignDialog] = useState(false);
   const [selectedAssignment, setSelectedAssignment] = useState(null);
+  const [course, setCourse] = useState(null);
+  const [assignments, setAssignments] = useState([]);
 
   const openAssign = () => {
     setOpenNewAssignDialog(true)
@@ -32,29 +34,22 @@ const CoursePage = () => {
   })
 
   const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(initializeCourses(token))
-  }, [dispatch, token])
-
   const courseID = useParams().id;
-  const course = useSelector(state => {
-    const courses = state.courses;
+  useEffect(() => {
+    //dispatch(initializeCourses(token))
+    getCourse(courseID, token)
+      .then((c) => {
+        setCourse(c)
+        setAssignments(c.assignments.slice().sort((a, b) => {return new Date(a.due) - new Date(b.due)}))
+      })
+  }, [courseID])
 
-    for (var i = 0; i < courses.length; i++) {
-      if (courses[i]._id === courseID) {
-        return courses[i]
-      }
-    }
-  })
-
-  if (course === undefined) {
+  if (course === null) {
     return (
       <>
       </>
     )
   }
-
-  const assignments = course.assignments.slice().sort((a, b) => {return new Date(a.due) - new Date(b.due)})
 
   return (
     <>
@@ -80,7 +75,7 @@ const CoursePage = () => {
       {
         assignments.map((assign) => {
           return (
-            <AssignmentDetailsCard key={assign._id} assign={assign} setOpenEditAssignDialog={setOpenEditAssignDialog} setSelectedAssignment={setSelectedAssignment}/>
+            <AssignmentDetailsCard key={assign._id} assign={assign} assignments={assignments} setAssignments={setAssignments}/>
           )
         })
       }

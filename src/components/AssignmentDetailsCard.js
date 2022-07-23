@@ -16,6 +16,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { differenceInDays, format, isBefore, parseISO } from "date-fns"
 import EditAssignmentDialog from "./EditAssignmentDialog"
 import { completeAssignment }  from "../reducers/assignmentReducers"
+import { removeAssignment } from "../reducers/courseReducers"
 
 const dateDisplay = (date) => {
   const today = parseISO(format(new Date(), "yyy-MM-dd"));
@@ -53,7 +54,7 @@ const timeDisplay = (due) => {
   }
 }
 
-const AssignmentDetailsCard = ({ assign }) => {
+const AssignmentDetailsCard = ({ assign, assignments, setAssignments }) => {
   const [open, setOpen] = useState(false);
   const openDetails = () => {
     setOpen(!open)
@@ -73,6 +74,9 @@ const AssignmentDetailsCard = ({ assign }) => {
   const dispatch = useDispatch();
   const completeAssignmentButton = async () => {
     dispatch(completeAssignment(assign._id, token));
+    dispatch(removeAssignment(assign._id));
+    setAssignments(assignments.filter(a => a._id !== assign._id))
+    setOpen(false);
   }
 
   return (
