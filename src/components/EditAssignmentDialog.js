@@ -48,6 +48,7 @@ const EditAssignmentDialog = ({openEditAssignDialog, setOpenEditAssignDialog, as
   const [name, setName] = useState(assignment.content);
   const [details, setDetails] = useState(assignment.details || "");
   const [date, setDate] = useState(assignment.due);
+  console.log(assignment)
 
   const token = useSelector(state => {
     const login = state.login
@@ -59,10 +60,10 @@ const EditAssignmentDialog = ({openEditAssignDialog, setOpenEditAssignDialog, as
   const updateAssignmentOnClick = async () => {
     if (openEditAssignDialog) {
       setOpenEditAssignDialog(false)
-      const assign = await dispatch(updateAssignment({content: name, details: details, due: date.toISOString(), _id: assignment._id}, token));
+      const assign = await dispatch(updateAssignment({content: name, details: details, due: date, _id: assignment._id}, token));
       setAssignContent(name)
       setAssignDetails(details)
-      setAssignDue(date.toISOString())
+      setAssignDue(date)
 
       return assign
     }
