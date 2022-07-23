@@ -7,10 +7,11 @@ import {
   IconButton,
   Snackbar,
   Alert,
-  Skeleton,
   Menu,
   MenuItem,
   ClickAwayListener,
+  Backdrop,
+  CircularProgress,
 } from "@mui/material"
 import AddIcon from "@mui/icons-material/Add"
 import SettingsIcon from "@mui/icons-material/Settings"
@@ -69,20 +70,9 @@ const CoursePage = () => {
 
   if (course === null) {
     return (
-      <Grid container direction="column" justifyContent="flex-start" alignItems="center" sx={{p: 5}} spacing={1}>
-        <Grid item sx={{width: "100%", mb: 2}} display="flex" justifyContent="center">
-          <Skeleton animation="wave" variant="rectangular" sx={{position: "relative", width: "100%", maxWidth: 1015, minHeight: 175, maxHeight: 175, backgroundColor: "rgb(35, 35, 35)"}}/>
-        </Grid>
-        <Grid item sx={{width: "100%"}} display="flex" justifyContent="center">
-          <Skeleton animation="wave" variant="rectangular" sx={{position: "relative", width: "100%", maxWidth: 1015, minHeight: 85, maxHeight: 85, backgroundColor: "rgb(35, 35, 35)"}}/>
-        </Grid>
-        <Grid item sx={{width: "100%"}} display="flex" justifyContent="center">
-          <Skeleton animation="wave" variant="rectangular" sx={{position: "relative", width: "100%", maxWidth: 1015, minHeight: 85, maxHeight: 85, backgroundColor: "rgb(35, 35, 35)"}}/>
-        </Grid>
-        <Grid item sx={{width: "100%"}} display="flex" justifyContent="center">
-          <Skeleton animation="wave" variant="rectangular" sx={{position: "relative", width: "100%", maxWidth: 1015, minHeight: 85, maxHeight: 85, backgroundColor: "rgb(35, 35, 35)"}}/>
-        </Grid>
-      </Grid>
+      <Backdrop open={true}>
+        <CircularProgress/>
+      </Backdrop>
     )
   }
 
