@@ -28,7 +28,7 @@ const NavBar = ({setOpenCourseDialog}) => {
 
   const userIcon = () => (
     <>
-      <Typography>NAME</Typography>
+      <Typography>{userToken.username}</Typography>
       <Box>
         <IconButton sx={{color:"white", mr:1}} size="large">
           <AccountCircleIcon/>
