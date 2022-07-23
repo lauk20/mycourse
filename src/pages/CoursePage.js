@@ -9,17 +9,14 @@ import {
 import AddIcon from "@mui/icons-material/Add"
 import SettingsIcon from "@mui/icons-material/Settings"
 import NewAssignmentDialog from "../components/NewAssignmentDialog"
-import EditAssignmentDialog from "../components/EditAssignmentDialog"
 import AssignmentDetailsCard from "../components/AssignmentDetailsCard"
 import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
-import { useSelector, useDispatch } from "react-redux"
-import { initializeCourses, getCourse } from "../reducers/courseReducers"
+import { useSelector } from "react-redux"
+import { getCourse } from "../reducers/courseReducers"
 
 const CoursePage = () => {
   const [openNewAssignDialog, setOpenNewAssignDialog] = useState(false)
-  const [openEditAssignDialog, setOpenEditAssignDialog] = useState(false);
-  const [selectedAssignment, setSelectedAssignment] = useState(null);
   const [course, setCourse] = useState(null);
   const [assignments, setAssignments] = useState([]);
 
@@ -33,7 +30,6 @@ const CoursePage = () => {
     return login.token
   })
 
-  const dispatch = useDispatch()
   const courseID = useParams().id;
   useEffect(() => {
     //dispatch(initializeCourses(token))
@@ -42,7 +38,7 @@ const CoursePage = () => {
         setCourse(c)
         setAssignments(c.assignments.slice().sort((a, b) => {return new Date(a.due) - new Date(b.due)}))
       })
-  }, [courseID])
+  }, [courseID, token])
 
   if (course === null) {
     return (
@@ -81,9 +77,6 @@ const CoursePage = () => {
       }
     </Grid>
     <NewAssignmentDialog openNewAssignDialog={openNewAssignDialog} setOpenNewAssignDialog={setOpenNewAssignDialog} courseID={courseID} course={course.name} assignments={assignments} setAssignments={setAssignments}/>
-    {selectedAssignment &&
-      <EditAssignmentDialog openEditAssignDialog={openEditAssignDialog} setOpenEditAssignDialog={setOpenEditAssignDialog} assignment={selectedAssignment} courseID={courseID}/>
-    }
     </>
   )
 }
