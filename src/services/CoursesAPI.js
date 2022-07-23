@@ -21,7 +21,10 @@ const getCourses = async (token) => {
   return response.data
 }
 
-const addCourse = async (courseTitle) => {
+const addCourse = async (courseTitle, token) => {
+  authHeader = {
+    headers: { Authorization: "bearer " + token }
+  }
   const course = {
     name: courseTitle,
     assignments: []

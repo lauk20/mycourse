@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useDispatch } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { updateAssignment } from "../reducers/assignmentReducers"
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -49,11 +49,17 @@ const EditAssignmentDialog = ({openEditAssignDialog, setOpenEditAssignDialog, as
   const [details, setDetails] = useState(assignment.details || "");
   const [date, setDate] = useState(assignment.due);
 
+  const token = useSelector(state => {
+    const login = state.login
+
+    return login.token
+  })
+
   const dispatch = useDispatch()
   const updateAssignmentOnClick = async () => {
     if (openEditAssignDialog) {
       setOpenEditAssignDialog(false)
-      const assign = await dispatch(updateAssignment({content: name, details: details, due: date.toISOString(), _id: assignment._id}));
+      const assign = await dispatch(updateAssignment({content: name, details: details, due: date.toISOString(), _id: assignment._id}, token));
       setAssignContent(name)
       setAssignDetails(details)
       setAssignDue(date.toISOString())

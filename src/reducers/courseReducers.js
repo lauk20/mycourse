@@ -48,9 +48,9 @@ export const initializeCourses = (token) => {
   }
 }
 
-export const createCourse = title => {
+export const createCourse = (title, token) => {
   return async dispatch => {
-    const course = await courseAPI.addCourse(title)
+    const course = await courseAPI.addCourse(title, token)
     dispatch(addCourse(course))
   }
 }

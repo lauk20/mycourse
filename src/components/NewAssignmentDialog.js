@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useDispatch } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { createAssignment } from "../reducers/assignmentReducers"
 import { newAssignment } from "../reducers/courseReducers"
 import Dialog from '@mui/material/Dialog';
@@ -38,12 +38,18 @@ const NewAssignmentDialog = ({openNewAssignDialog, setOpenNewAssignDialog, cours
   const [details, setDetails] = useState("");
   const [date, setDate] = useState(new Date());
 
+  const token = useSelector(state => {
+    const login = state.login
+
+    return login.token
+  })
+
   const dispatch = useDispatch()
   const addnewAssignment = async (event) => {
     if (name !== "" && openNewAssignDialog) {
       setOpenNewAssignDialog(false)
       console.log(name, courseID)
-      const assignment = await dispatch(createAssignment(name, date, courseID, details))
+      const assignment = await dispatch(createAssignment(name, date, courseID, details, token))
       console.log(assignment)
       //dispatch(newAssignment({content: name, due: date.toString(), course: courseID}))
       dispatch(newAssignment(assignment))

@@ -39,9 +39,9 @@ const assignmentSlice = createSlice({
   }
 })
 
-export const createAssignment = (name, date, courseID, details) => {
+export const createAssignment = (name, date, courseID, details, token) => {
   return async dispatch => {
-    const assignment = await assignmentAPI.addAssignment(name, date, courseID, details);
+    const assignment = await assignmentAPI.addAssignment(name, date, courseID, details, token);
     dispatch(addAssignment(assignment))
 
     return assignment;
@@ -57,9 +57,9 @@ export const updateDetails = (assignmentID, details) => {
   }
 }
 
-export const updateAssignment = (newAssignmentObj) => {
+export const updateAssignment = (newAssignmentObj, token) => {
   return async dispatch => {
-    const assignment = await assignmentAPI.updateAssignment(newAssignmentObj);
+    const assignment = await assignmentAPI.updateAssignment(newAssignmentObj, token);
     dispatch(setAssignment(newAssignmentObj))
 
     return assignment;
@@ -75,9 +75,9 @@ export const initializeAssignments = () => {
   }
 }
 
-export const completeAssignment = (id) => {
+export const completeAssignment = (id, token) => {
   return async dispatch => {
-    await assignmentAPI.completeAssignment(id);
+    await assignmentAPI.completeAssignment(id, token);
     dispatch(removeAssignment(id))
   }
 }

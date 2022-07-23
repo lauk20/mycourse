@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useDispatch } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { createCourse } from "../reducers/courseReducers"
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -30,11 +30,17 @@ const WhiteBorderTextField = styled(TextField)`
 const NewCourseDialog = ({openCourseDialog, setOpenCourseDialog})=> {
   const [name, setName] = useState("");
 
+  const token = useSelector(state => {
+    const login = state.login
+
+    return login.token
+  })
+
   const dispatch = useDispatch()
   const newCourse = async (event) => {
     if (name !== "") {
       console.log(name)
-      dispatch(createCourse(name))
+      dispatch(createCourse(name, token))
       setOpenCourseDialog(false)
     }
   }

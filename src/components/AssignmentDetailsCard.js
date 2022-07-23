@@ -12,7 +12,7 @@ import {
 } from "@mui/material"
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { useState } from "react"
-import { useDispatch } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { differenceInDays, format, isBefore, parseISO } from "date-fns"
 import EditAssignmentDialog from "./EditAssignmentDialog"
 import { completeAssignment }  from "../reducers/assignmentReducers"
@@ -64,9 +64,15 @@ const AssignmentDetailsCard = ({ assign }) => {
   const [details, setDetails] = useState(assign.details);
   const [due, setDue] = useState(assign.due)
 
+  const token = useSelector(state => {
+    const login = state.login
+
+    return login.token
+  })
+
   const dispatch = useDispatch();
   const completeAssignmentButton = async () => {
-    dispatch(completeAssignment(assign._id));
+    dispatch(completeAssignment(assign._id, token));
   }
 
   return (
