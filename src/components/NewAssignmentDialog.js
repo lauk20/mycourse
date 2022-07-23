@@ -33,7 +33,7 @@ const WhiteBorderTextField = styled(TextField)`
   }
 `;
 
-const NewAssignmentDialog = ({openNewAssignDialog, setOpenNewAssignDialog, courseID, course})=> {
+const NewAssignmentDialog = ({openNewAssignDialog, setOpenNewAssignDialog, courseID, course, assignments, setAssignments})=> {
   const [name, setName] = useState("");
   const [details, setDetails] = useState("");
   const [date, setDate] = useState(new Date());
@@ -53,6 +53,7 @@ const NewAssignmentDialog = ({openNewAssignDialog, setOpenNewAssignDialog, cours
       console.log(assignment)
       //dispatch(newAssignment({content: name, due: date.toString(), course: courseID}))
       dispatch(newAssignment(assignment))
+      setAssignments(assignments.concat(assignment))
     }
   }
 
