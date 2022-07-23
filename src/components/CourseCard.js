@@ -101,7 +101,7 @@ const CourseCard = ({ title, courseID, course}) => {
         }
       </CardContent>
       <CardActions>
-        <Button sx={{color: "white"}}>
+        <Button sx={{color: "white"}} component={Link} to={"/courses/"+course._id}>
           Show All
         </Button>
       </CardActions>
