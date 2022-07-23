@@ -33,7 +33,7 @@ const WhiteBorderTextField = styled(TextField)`
   }
 `;
 
-const NewAssignmentDialog = ({openNewAssignDialog, setOpenNewAssignDialog, courseID, course, assignments, setAssignments})=> {
+const NewAssignmentDialog = ({openNewAssignDialog, setOpenNewAssignDialog, courseID, course, assignments, setAssignments, setSnackbarOpen, setSnackbarText, setSnackbarSeverity})=> {
   const [name, setName] = useState("");
   const [details, setDetails] = useState("");
   const [date, setDate] = useState(new Date());
@@ -54,6 +54,10 @@ const NewAssignmentDialog = ({openNewAssignDialog, setOpenNewAssignDialog, cours
       //dispatch(newAssignment({content: name, due: date.toString(), course: courseID}))
       dispatch(newAssignment(assignment))
       setAssignments(assignments.concat(assignment))
+      
+      setSnackbarOpen(true);
+      setSnackbarText("Assignment has been successfully created!")
+      setSnackbarSeverity("success")
     }
   }
 

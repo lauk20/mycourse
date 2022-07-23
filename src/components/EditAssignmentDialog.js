@@ -32,7 +32,7 @@ const WhiteBorderTextField = styled(TextField)`
   }
 `;
 
-const EditAssignmentDialog = ({openEditAssignDialog, setOpenEditAssignDialog, assignment, setAssignContent, setAssignDetails, setAssignDue})=> {
+const EditAssignmentDialog = ({openEditAssignDialog, setOpenEditAssignDialog, assignment, setAssignContent, setAssignDetails, setAssignDue, setSnackbarOpen, setSnackbarText, setSnackbarSeverity})=> {
   /*
   const course = useSelector(state => {
     const courses = state.courses;
@@ -63,6 +63,10 @@ const EditAssignmentDialog = ({openEditAssignDialog, setOpenEditAssignDialog, as
       setAssignContent(name)
       setAssignDetails(details)
       setAssignDue(date)
+
+      setSnackbarOpen(true);
+      setSnackbarText("Assignment has been successfully edited!")
+      setSnackbarSeverity("success")
 
       return assign
     }

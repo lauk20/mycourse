@@ -5,6 +5,9 @@ import {
   Box,
   Typography,
   IconButton,
+  Snackbar,
+  Alert,
+  Skeleton,
 } from "@mui/material"
 import AddIcon from "@mui/icons-material/Add"
 import SettingsIcon from "@mui/icons-material/Settings"
@@ -19,9 +22,16 @@ const CoursePage = () => {
   const [openNewAssignDialog, setOpenNewAssignDialog] = useState(false)
   const [course, setCourse] = useState(null);
   const [assignments, setAssignments] = useState([]);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarText, setSnackbarText] = useState("Success");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success")
 
   const openAssign = () => {
     setOpenNewAssignDialog(true)
+  }
+
+  const snackbarClose = () => {
+    setSnackbarOpen(false);
   }
 
   const token = useSelector(state => {
@@ -42,8 +52,20 @@ const CoursePage = () => {
 
   if (course === null) {
     return (
-      <>
-      </>
+      <Grid container direction="column" justifyContent="flex-start" alignItems="center" sx={{p: 5}} spacing={1}>
+        <Grid item sx={{width: "100%", mb: 2}} display="flex" justifyContent="center">
+          <Skeleton animation="wave" variant="rectangular" sx={{position: "relative", width: "100%", maxWidth: 1015, minHeight: 175, maxHeight: 175, backgroundColor: "rgb(35, 35, 35)"}}/>
+        </Grid>
+        <Grid item sx={{width: "100%"}} display="flex" justifyContent="center">
+          <Skeleton animation="wave" variant="rectangular" sx={{position: "relative", width: "100%", maxWidth: 1015, minHeight: 85, maxHeight: 85, backgroundColor: "rgb(35, 35, 35)"}}/>
+        </Grid>
+        <Grid item sx={{width: "100%"}} display="flex" justifyContent="center">
+          <Skeleton animation="wave" variant="rectangular" sx={{position: "relative", width: "100%", maxWidth: 1015, minHeight: 85, maxHeight: 85, backgroundColor: "rgb(35, 35, 35)"}}/>
+        </Grid>
+        <Grid item sx={{width: "100%"}} display="flex" justifyContent="center">
+          <Skeleton animation="wave" variant="rectangular" sx={{position: "relative", width: "100%", maxWidth: 1015, minHeight: 85, maxHeight: 85, backgroundColor: "rgb(35, 35, 35)"}}/>
+        </Grid>
+      </Grid>
     )
   }
 
@@ -71,12 +93,17 @@ const CoursePage = () => {
       {
         assignments.map((assign) => {
           return (
-            <AssignmentDetailsCard key={assign._id} assign={assign} assignments={assignments} setAssignments={setAssignments}/>
+            <AssignmentDetailsCard key={assign._id} assign={assign} assignments={assignments} setAssignments={setAssignments} setSnackbarOpen={setSnackbarOpen} setSnackbarText={setSnackbarText} setSnackbarSeverity={setSnackbarSeverity}/>
           )
         })
       }
     </Grid>
-    <NewAssignmentDialog openNewAssignDialog={openNewAssignDialog} setOpenNewAssignDialog={setOpenNewAssignDialog} courseID={courseID} course={course.name} assignments={assignments} setAssignments={setAssignments}/>
+    <NewAssignmentDialog openNewAssignDialog={openNewAssignDialog} setOpenNewAssignDialog={setOpenNewAssignDialog} courseID={courseID} course={course.name} assignments={assignments} setAssignments={setAssignments} setSnackbarOpen={setSnackbarOpen} setSnackbarText={setSnackbarText} setSnackbarSeverity={setSnackbarSeverity}/>
+    <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={snackbarClose}>
+      <Alert variant="outlined" severity={snackbarSeverity} onClose={snackbarClose}>
+        {snackbarText}
+      </Alert>
+    </Snackbar>
     </>
   )
 }

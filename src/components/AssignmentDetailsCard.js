@@ -54,7 +54,7 @@ const timeDisplay = (due) => {
   }
 }
 
-const AssignmentDetailsCard = ({ assign, assignments, setAssignments }) => {
+const AssignmentDetailsCard = ({ assign, assignments, setAssignments, setSnackbarOpen, setSnackbarText, setSnackbarSeverity }) => {
   const [open, setOpen] = useState(false);
   const openDetails = () => {
     setOpen(!open)
@@ -77,6 +77,10 @@ const AssignmentDetailsCard = ({ assign, assignments, setAssignments }) => {
     dispatch(removeAssignment(assign._id));
     setAssignments(assignments.filter(a => a._id !== assign._id))
     setOpen(false);
+
+    setSnackbarOpen(true);
+    setSnackbarText("Assignment has been completed!")
+    setSnackbarSeverity("success")
   }
 
   return (
@@ -130,7 +134,7 @@ const AssignmentDetailsCard = ({ assign, assignments, setAssignments }) => {
         </Card>
       </Grid>
     </Slide>
-    <EditAssignmentDialog openEditAssignDialog={openEditAssignDialog} setOpenEditAssignDialog={setOpenEditAssignDialog} assignment={assign} setAssignContent={setContent} setAssignDetails={setDetails} setAssignDue={setDue}/>
+    <EditAssignmentDialog openEditAssignDialog={openEditAssignDialog} setOpenEditAssignDialog={setOpenEditAssignDialog} assignment={assign} setAssignContent={setContent} setAssignDetails={setDetails} setAssignDue={setDue} setSnackbarOpen={setSnackbarOpen} setSnackbarText={setSnackbarText} setSnackbarSeverity={setSnackbarSeverity}/>
     </>
   )
 }
