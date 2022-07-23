@@ -48,7 +48,6 @@ const EditAssignmentDialog = ({openEditAssignDialog, setOpenEditAssignDialog, as
   const [name, setName] = useState(assignment.content);
   const [details, setDetails] = useState(assignment.details || "");
   const [date, setDate] = useState(assignment.due);
-  console.log(assignment)
 
   const token = useSelector(state => {
     const login = state.login
