@@ -8,6 +8,9 @@ import {
   Snackbar,
   Alert,
   Skeleton,
+  Menu,
+  MenuItem,
+  ClickAwayListener,
 } from "@mui/material"
 import AddIcon from "@mui/icons-material/Add"
 import SettingsIcon from "@mui/icons-material/Settings"
@@ -22,9 +25,14 @@ const CoursePage = () => {
   const [openNewAssignDialog, setOpenNewAssignDialog] = useState(false)
   const [course, setCourse] = useState(null);
   const [assignments, setAssignments] = useState([]);
+
+  //Snackbar States
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarText, setSnackbarText] = useState("Success");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success")
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuAnchor, setMenuAnchor] = useState(null);
 
   const openAssign = () => {
     setOpenNewAssignDialog(true)
@@ -32,6 +40,15 @@ const CoursePage = () => {
 
   const snackbarClose = () => {
     setSnackbarOpen(false);
+  }
+
+  const openMenu = (event) => {
+    setMenuAnchor(event.currentTarget);
+    setMenuOpen(true);
+  }
+
+  const closeMenu = () => {
+    setMenuOpen(false);
   }
 
   const token = useSelector(state => {
@@ -84,9 +101,18 @@ const CoursePage = () => {
             <IconButton sx={{color: "white"}} onClick={openAssign}>
               <AddIcon fontSize="large"/>
             </IconButton>
-            <IconButton sx={{color: "white"}}>
-              <SettingsIcon fontSize="large"/>
-            </IconButton>
+            <ClickAwayListener onClickAway={closeMenu}>
+              <Box>
+                <IconButton sx={{color: "white"}} onClick={openMenu}>
+                  <SettingsIcon fontSize="large"/>
+                </IconButton>
+                <Menu anchorEl={menuAnchor} open={menuOpen} onClose={closeMenu}>
+                  <MenuItem onClick={closeMenu}>Edit Course Title</MenuItem>
+                  <MenuItem onClick={closeMenu}>Delete Course</MenuItem>
+                  <MenuItem onClick={closeMenu}>Cancel</MenuItem>
+                </Menu>
+              </Box>
+            </ClickAwayListener>
           </Box>
         </Card>
       </Grid>
