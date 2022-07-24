@@ -22,6 +22,7 @@ const Courses = ({openCourseDialog, setOpenCourseDialog}) => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(initializeCourses(token))
+    document.title = "MyCourse - Courses"
   }, [dispatch, token])
 
   return (

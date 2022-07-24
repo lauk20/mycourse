@@ -142,11 +142,15 @@ const CoursePage = () => {
 
   const courseID = useParams().id;
   useEffect(() => {
+    document.title = "MyCourse"
+  }, [])
+  useEffect(() => {
     //dispatch(initializeCourses(token))
     getCourse(courseID, token)
       .then((c) => {
         setCourse(c)
         setAssignments(c.assignments.slice().sort((a, b) => {return new Date(a.due) - new Date(b.due)}))
+        document.title = "MyCourse - " + c.name
       })
   }, [courseID, token])
 
