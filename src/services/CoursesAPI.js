@@ -27,7 +27,7 @@ const getCourse = async (id, token) => {
   }
   const response = await axios.get(url + "/" + id.toString(), authHeader);
 
-  return response.data;
+  return response.data
 }
 
 const addCourse = async (courseTitle, token) => {
@@ -43,6 +43,26 @@ const addCourse = async (courseTitle, token) => {
   return response.data
 }
 
-const services = { getCourses, getCourse, addCourse, setToken }
+const setCourseTitle = async (id, name, token) => {
+  authHeader = {
+    headers: { Authorization: "bearer " + token }
+  }
+
+  const response = await axios.put(url + "/" + id.toString(), {name}, authHeader);
+
+  return response.data
+}
+
+const deleteCourse = async (id, token) => {
+  authHeader = {
+    headers: { Authorization: "bearer " + token }
+  }
+
+  const response = await axios.delete(url + "/" + id.toString(), authHeader);
+
+  return response.data
+}
+
+const services = { getCourses, getCourse, addCourse, setToken, setCourseTitle, deleteCourse }
 
 export default services

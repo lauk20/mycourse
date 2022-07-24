@@ -12,15 +12,90 @@ import {
   ClickAwayListener,
   Backdrop,
   CircularProgress,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Button,
+  TextField,
 } from "@mui/material"
 import AddIcon from "@mui/icons-material/Add"
 import SettingsIcon from "@mui/icons-material/Settings"
 import NewAssignmentDialog from "../components/NewAssignmentDialog"
 import AssignmentDetailsCard from "../components/AssignmentDetailsCard"
 import { useState, useEffect } from "react"
-import { useParams } from "react-router-dom"
-import { useSelector } from "react-redux"
-import { getCourse } from "../reducers/courseReducers"
+import { useParams, useNavigate } from "react-router-dom"
+import { useSelector, useDispatch } from "react-redux"
+import { getCourse, setCourseTitle, deleteCourse } from "../reducers/courseReducers"
+import { styled } from "@mui/material/styles"
+
+const WhiteBorderTextField = styled(TextField)`
+  & label.Mui-focused {
+    color: white;
+  }
+  & .MuiOutlinedInput-root {
+    &.Mui-focused fieldset {
+      border-color: white;
+    }
+    &:hover fieldset {
+      border-color: white;
+    }
+  }
+  & .MuiOutlinedInput-notchedOutline {
+    border-color: white;
+  }
+`;
+
+const EditCourseNameDialog = ({openEditCourseName, setOpenEditCourseName, course, courseID, token}) => {
+  const [name, setName] = useState(course.name);
+
+  const dispatch = useDispatch()
+  const save = async () => {
+    dispatch(setCourseTitle(courseID, name, token))
+    setOpenEditCourseName(false);
+    course.name = name;
+  }
+
+  return (
+    <Dialog open={openEditCourseName}>
+      <DialogTitle sx={{backgroundColor: "rgb(35, 35, 35)", color: "white"}}>Edit Course Title</DialogTitle>
+      <DialogContent sx={{backgroundColor: "rgb(35, 35, 35)"}}>
+        <DialogContentText sx={{mb: 2}}>Change the name of this course.</DialogContentText>
+        <WhiteBorderTextField autoFocus id="name" label="Course Name" fullWidth value={name} onChange={(event) => {setName(event.target.value)}} sx={{input: {color: "white"}}}/>
+      </DialogContent>
+      <DialogActions sx={{backgroundColor: "rgb(35, 35, 35)"}}>
+        <Button sx={{color: "white"}} onClick={() => {setOpenEditCourseName(false)}}>Cancel</Button>
+        <Button sx={{color: "white"}} onClick={save}>Save</Button>
+      </DialogActions>
+    </Dialog>
+  )
+}
+
+const DeleteCourseDialog = ({openDeleteCourse, setOpenDeleteCourse, course, courseID, token}) => {
+  const [name, setName] = useState("");
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const del = async () => {
+    dispatch(deleteCourse(courseID, token));
+    navigate("/courses");
+  }
+
+  return (
+    <Dialog open={openDeleteCourse}>
+      <DialogTitle sx={{backgroundColor: "rgb(35, 35, 35)", color: "white"}}>Delete Course?</DialogTitle>
+      <DialogContent sx={{backgroundColor: "rgb(35, 35, 35)"}}>
+        <DialogContentText sx={{mb: 2}}>Deleting this course will remove it permanently. Please enter the course's name to confirm the deletion.</DialogContentText>
+        <WhiteBorderTextField autoFocus id="name" label="Course Name" fullWidth value={name} onChange={(event) => {setName(event.target.value)}} sx={{input: {color: "white"}}}/>
+      </DialogContent>
+      <DialogActions sx={{backgroundColor: "rgb(35, 35, 35)"}}>
+        <Button sx={{color: "white"}} onClick={() => {setOpenDeleteCourse(false)}}>Cancel</Button>
+        <Button sx={{color: "white"}} onClick={() => {if (name === course.name){del()}}}>Delete</Button>
+      </DialogActions>
+    </Dialog>
+  )
+}
 
 const CoursePage = () => {
   const [openNewAssignDialog, setOpenNewAssignDialog] = useState(false)
@@ -32,8 +107,15 @@ const CoursePage = () => {
   const [snackbarText, setSnackbarText] = useState("Success");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success")
 
+  //Menu States
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuAnchor, setMenuAnchor] = useState(null);
+
+  //Edit Course Dialog States
+  const [openEditCourseName, setOpenEditCourseName] = useState(false);
+
+  //Delete Course Dialog States
+  const [openDeleteCourse, setOpenDeleteCourse] = useState(false);
 
   const openAssign = () => {
     setOpenNewAssignDialog(true)
@@ -97,8 +179,8 @@ const CoursePage = () => {
                   <SettingsIcon fontSize="large"/>
                 </IconButton>
                 <Menu anchorEl={menuAnchor} open={menuOpen} onClose={closeMenu}>
-                  <MenuItem onClick={closeMenu}>Edit Course Title</MenuItem>
-                  <MenuItem onClick={closeMenu}>Delete Course</MenuItem>
+                  <MenuItem onClick={() => {setOpenEditCourseName(true); closeMenu()}}>Edit Course Title</MenuItem>
+                  <MenuItem onClick={() => {setOpenDeleteCourse(true); closeMenu()}}>Delete Course</MenuItem>
                   <MenuItem onClick={closeMenu}>Cancel</MenuItem>
                 </Menu>
               </Box>
@@ -120,6 +202,8 @@ const CoursePage = () => {
         {snackbarText}
       </Alert>
     </Snackbar>
+    <EditCourseNameDialog openEditCourseName={openEditCourseName} setOpenEditCourseName={setOpenEditCourseName} course={course} courseID={courseID} token={token}/>
+    <DeleteCourseDialog openDeleteCourse={openDeleteCourse} setOpenDeleteCourse={setOpenDeleteCourse} course={course} courseID={courseID} token={token}/>
     </>
   )
 }
