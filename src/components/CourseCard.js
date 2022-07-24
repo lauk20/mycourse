@@ -91,7 +91,7 @@ const CourseCard = ({ title, courseID, course}) => {
               {
                 assignmentsObj[key].map(item =>
                   <div key={item._id}>
-                    <Typography key={item._id} component={Link} to="/" sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">{assignmentDateDisplay(item)}</Typography>
+                    <Typography key={item._id} component={Link} to={"/" + "courses" + "/" + course._id.toString()} sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">{assignmentDateDisplay(item)}</Typography>
                     <br/>
                   </div>
                 )
