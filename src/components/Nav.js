@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -7,6 +7,7 @@ import {
   Box,
   MenuItem,
   Grid,
+  Drawer,
 } from "@mui/material"
 import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
@@ -15,6 +16,8 @@ import { Link, useLocation } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 const NavBar = ({setOpenCourseDialog}) => {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
   const openDialog = () => {
     setOpenCourseDialog(true);
   }
@@ -49,11 +52,11 @@ const NavBar = ({setOpenCourseDialog}) => {
 
   return (
     <>
-    <AppBar color="primary">
+    <AppBar color="primary" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1}}>
       <Toolbar>
         <Grid container>
           <Grid item>
-            <IconButton sx={{color:"white", mr:1}} size="large">
+            <IconButton onClick={() => {setDrawerOpen(!drawerOpen)}}sx={{color:"white", mr:1}} size="large">
               <MenuIcon/>
             </IconButton>
           </Grid>
@@ -93,6 +96,12 @@ const NavBar = ({setOpenCourseDialog}) => {
       </Toolbar>
     </AppBar>
     <Toolbar/>
+    <Drawer anchor="left" open={drawerOpen}>
+      <Toolbar/>
+      <Box>
+        <Typography>course</Typography>
+      </Box>
+    </Drawer>
     </>
   )
 }
