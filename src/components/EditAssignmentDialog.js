@@ -57,12 +57,16 @@ const EditAssignmentDialog = ({openEditAssignDialog, setOpenEditAssignDialog, as
 
   const dispatch = useDispatch()
   const updateAssignmentOnClick = async () => {
+    let dateVal = date;
+    if (typeof(date) === "object") {
+      dateVal = date.toISOString();
+    }
     if (openEditAssignDialog) {
       setOpenEditAssignDialog(false)
-      const assign = await dispatch(updateAssignment({content: name, details: details, due: date, _id: assignment._id}, token));
+      const assign = await dispatch(updateAssignment({content: name, details: details, due: dateVal, _id: assignment._id}, token));
       setAssignContent(name)
       setAssignDetails(details)
-      setAssignDue(date)
+      setAssignDue(dateVal)
 
       setSnackbarOpen(true);
       setSnackbarText("Assignment has been successfully edited!")
