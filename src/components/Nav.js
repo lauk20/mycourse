@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -17,7 +17,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link, useLocation } from "react-router-dom"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
+import { initializeCourses } from "../reducers/courseReducers"
 
 const NavBar = ({setOpenCourseDialog}) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -53,6 +54,14 @@ const NavBar = ({setOpenCourseDialog}) => {
       </Box>
     </>
   )
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (userToken != null){
+      dispatch(initializeCourses(userToken.token))
+      document.title = "MyCourse - Courses"
+    }
+  }, [dispatch, userToken])
 
   const courses = useSelector(state => {
     return state.courses;
