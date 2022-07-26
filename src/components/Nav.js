@@ -10,6 +10,7 @@ import {
   Drawer,
   List,
   ListItem,
+  ListItemText,
   ListItemButton,
 } from "@mui/material"
 import MenuIcon from '@mui/icons-material/Menu';
@@ -53,16 +54,22 @@ const NavBar = ({setOpenCourseDialog}) => {
     </>
   )
 
+  const courses = useSelector(state => {
+    return state.courses;
+  })
+
   return (
     <>
     <AppBar color="primary" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1}}>
       <Toolbar>
         <Grid container wrap="nowrap" overflow="auto">
-          <Grid item>
-            <IconButton onClick={() => {setDrawerOpen(!drawerOpen)}}sx={{color:"white", mr:1}} size="large">
-              <MenuIcon/>
-            </IconButton>
-          </Grid>
+          {userToken != null &&
+            <Grid item>
+              <IconButton onClick={() => {setDrawerOpen(!drawerOpen)}}sx={{color:"white", mr:1}} size="large">
+                <MenuIcon/>
+              </IconButton>
+            </Grid>
+          }
           <Grid item display="flex" justifyContent="flex-start" alignItems="center">
             <Typography variant="h6" sx={{mr: 1, letterSpacing:"0.3rem"}}>
               MYCOURSE
@@ -99,14 +106,24 @@ const NavBar = ({setOpenCourseDialog}) => {
       </Toolbar>
     </AppBar>
     <Toolbar/>
-    <Drawer anchor="left" open={drawerOpen}>
-      <Toolbar/>
-      <List>
-        <ListItem sx={{width: "250px"}}>
-          <ListItemButton sx={{width: "100%"}}>Course</ListItemButton>
-        </ListItem>
-      </List>
-    </Drawer>
+    {userToken &&
+      <Drawer anchor="left" open={drawerOpen}>
+        <Toolbar/>
+        <List>
+          {
+            courses.map(course => {
+              return (
+                <ListItem key={course._id} sx={{width: "250px", m: 0}} disablePadding>
+                  <ListItemButton onClick={()=>{setDrawerOpen(false)}} sx={{width: "100%", m: 0}} component={Link} to={"/courses/" + course._id.toString()}>
+                    <ListItemText primary={course.name}/>
+                  </ListItemButton>
+                </ListItem>
+              )
+            })
+          }
+        </List>
+      </Drawer>
+    }
     </>
   )
 }
