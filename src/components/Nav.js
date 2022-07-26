@@ -8,6 +8,9 @@ import {
   MenuItem,
   Grid,
   Drawer,
+  List,
+  ListItem,
+  ListItemButton,
 } from "@mui/material"
 import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
@@ -54,7 +57,7 @@ const NavBar = ({setOpenCourseDialog}) => {
     <>
     <AppBar color="primary" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1}}>
       <Toolbar>
-        <Grid container>
+        <Grid container wrap="nowrap" overflow="auto">
           <Grid item>
             <IconButton onClick={() => {setDrawerOpen(!drawerOpen)}}sx={{color:"white", mr:1}} size="large">
               <MenuIcon/>
@@ -65,7 +68,7 @@ const NavBar = ({setOpenCourseDialog}) => {
               MYCOURSE
             </Typography>
           </Grid>
-          <Grid item xs display="flex" justifyContent="flex-start" alignItems="center">
+          <Grid item display="flex" justifyContent="flex-start" alignItems="center">
             {
               userToken != null &&
               <Box>
@@ -85,7 +88,7 @@ const NavBar = ({setOpenCourseDialog}) => {
               </Box>
             }
           </Grid>
-          <Grid item display="flex" justifyContent="flex-start" alignItems="center">
+          <Grid xs item display="flex" justifyContent="flex-end" alignItems="center">
             {
               userToken != null ?
               userIcon() :
@@ -98,9 +101,11 @@ const NavBar = ({setOpenCourseDialog}) => {
     <Toolbar/>
     <Drawer anchor="left" open={drawerOpen}>
       <Toolbar/>
-      <Box>
-        <Typography>course</Typography>
-      </Box>
+      <List>
+        <ListItem sx={{width: "150px"}}>
+          <ListItemButton sx={{width: "100%"}}>Course</ListItemButton>
+        </ListItem>
+      </List>
     </Drawer>
     </>
   )
