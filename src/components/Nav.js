@@ -102,7 +102,7 @@ const NavBar = ({setOpenCourseDialog}) => {
     <Drawer anchor="left" open={drawerOpen}>
       <Toolbar/>
       <List>
-        <ListItem sx={{width: "150px"}}>
+        <ListItem sx={{width: "250px"}}>
           <ListItemButton sx={{width: "100%"}}>Course</ListItemButton>
         </ListItem>
       </List>
