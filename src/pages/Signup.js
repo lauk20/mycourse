@@ -68,8 +68,8 @@ const Signup = () => {
         </Grid>
         <Box component="form" noValidate onSubmit={submit}>
           <WhiteBorderTextField error={false} value={username} helperText="Must be 3-20 characters long and only contain letters and numbers." onChange={({target}) => {setUsername(target.value)}} fullWidth required margin="normal" name="username" label="Username" id="username" sx={{input: {color: "white"}}} autoFocus/>
-          <WhiteBorderTextField value={password} onChange={({target}) => {setPassword(target.value)}} fullWidth required margin="normal" name="password" label="Password" id="password" type="password" sx={{input: {color: "white"}}}/>
-          <Button type="submit" fullWidth sx={{color: "white", backgroundColor: "rgb(25, 25, 25)", "&:hover": {bgcolor: "rgb(25, 25, 25)"}}}>SIGN UP</Button>
+          <WhiteBorderTextField value={password} helperText="Must be 8-20 characters long" onChange={({target}) => {setPassword(target.value)}} fullWidth required margin="normal" name="password" label="Password" id="password" type="password" sx={{input: {color: "white"}}}/>
+          <Button type="submit" fullWidth sx={{color: "white", backgroundColor: "rgb(25, 25, 25)", "&:hover": {bgcolor: "rgb(25, 25, 25)"}, mt: 2}}>SIGN UP</Button>
           <Typography variant="caption" color="red">{signupHelpText}</Typography>
         </Box>
         <Box display="flex" justifyContent="flex-start" width="100%">
