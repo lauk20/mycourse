@@ -62,7 +62,8 @@ const Signup = () => {
 
     setLoading(false);
   }
-  const submit = async (event) => {
+
+  const submit = async () => {
     //event.preventDefault();
     setSignupHelpText("");
     setLoading(true)
