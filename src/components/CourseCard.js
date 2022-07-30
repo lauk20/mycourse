@@ -90,10 +90,10 @@ const CourseCard = ({ title, courseID, course}) => {
               <Typography sx={{color: "white"}} variant="subtitle2">{dateDisplay(key)}</Typography>
               {
                 assignmentsObj[key].map(item =>
-                  <div key={item._id}>
+                  <Box key={item._id}>
                     <Typography key={item._id} component={Link} to={"/" + "courses" + "/" + course._id.toString()} sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">{assignmentDateDisplay(item)}</Typography>
                     <br/>
-                  </div>
+                  </Box>
                 )
               }
             </Box>
