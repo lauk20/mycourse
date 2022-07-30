@@ -9,6 +9,8 @@ import Box from "@mui/material/Box"
 import IconButton from "@mui/material/IconButton"
 import SettingsIcon from '@mui/icons-material/Settings';
 import AddIcon from '@mui/icons-material/Add';
+import Snackbar from "@mui/material/Snackbar"
+import Alert from "@mui/material/Alert"
 import { Link } from "react-router-dom"
 import NewAssignmentDialog from "./NewAssignmentDialog"
 import { useState } from "react"
@@ -41,14 +43,23 @@ const assignmentDateDisplay = (assignment) => {
 
 const CourseCard = ({ title, courseID, course}) => {
   const [openNewAssignDialog, setOpenNewAssignDialog] = useState(false)
+  const [assignments, setAssignments] = useState(course.assignments.slice().sort((a, b) => {return new Date(a.due) - new Date(b.due)}));
 
   const openAssign = () => {
     setOpenNewAssignDialog(true)
   }
 
+  //Snackbar States
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarText, setSnackbarText] = useState("Success");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success")
+  const snackbarClose = () => {
+    setSnackbarOpen(false);
+  }
+
   //console.log(course.assignments)
 
-  const assignments = course.assignments.slice().sort((a, b) => {return new Date(a.due) - new Date(b.due)})
+  //const assignments = course.assignments.slice().sort((a, b) => {return new Date(a.due) - new Date(b.due)})
 
   //console.log(assignments)
 
@@ -78,9 +89,6 @@ const CourseCard = ({ title, courseID, course}) => {
           <IconButton sx={{color: "white"}} onClick={openAssign}>
             <AddIcon fontSize="small"/>
           </IconButton>
-          <IconButton sx={{color: "white"}}>
-            <SettingsIcon fontSize="small"/>
-          </IconButton>
         </Box>
       </Box>
       <CardContent sx={{display: "flex", flexDirection: "column", height: 215, minWidth: 300, maxWidth: 300, overflow: "hidden"}}>
@@ -92,7 +100,6 @@ const CourseCard = ({ title, courseID, course}) => {
                 assignmentsObj[key].map(item =>
                   <Box key={item._id}>
                     <Typography key={item._id} component={Link} to={"/" + "courses" + "/" + course._id.toString()} sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">{assignmentDateDisplay(item)}</Typography>
-                    <br/>
                   </Box>
                 )
               }
@@ -106,7 +113,12 @@ const CourseCard = ({ title, courseID, course}) => {
         </Button>
       </CardActions>
     </Card>
-    <NewAssignmentDialog openNewAssignDialog={openNewAssignDialog} setOpenNewAssignDialog={setOpenNewAssignDialog} courseID={courseID}/>
+    <NewAssignmentDialog openNewAssignDialog={openNewAssignDialog} setOpenNewAssignDialog={setOpenNewAssignDialog} course={course.name} courseID={courseID} assignments={assignments} setAssignments={setAssignments} setAssignments={setAssignments} setSnackbarOpen={setSnackbarOpen} setSnackbarText={setSnackbarText} setSnackbarSeverity={setSnackbarSeverity}/>
+    <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={snackbarClose}>
+      <Alert variant="outlined" severity={snackbarSeverity} onClose={snackbarClose}>
+        {snackbarText}
+      </Alert>
+    </Snackbar>
     </>
   )
 }
