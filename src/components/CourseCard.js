@@ -7,7 +7,6 @@ import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
 import Box from "@mui/material/Box"
 import IconButton from "@mui/material/IconButton"
-import SettingsIcon from '@mui/icons-material/Settings';
 import AddIcon from '@mui/icons-material/Add';
 import Snackbar from "@mui/material/Snackbar"
 import Alert from "@mui/material/Alert"
@@ -99,7 +98,7 @@ const CourseCard = ({ title, courseID, course}) => {
               {
                 assignmentsObj[key].map(item =>
                   <Box key={item._id}>
-                    <Typography key={item._id} component={Link} to={"/" + "courses" + "/" + course._id.toString()} sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">{assignmentDateDisplay(item)}</Typography>
+                    <Typography key={item._id} component={Link} to={"/courses/" + course._id.toString()} sx={{color: "white", pl: 1, textDecoration: "none"}} variant="caption">{assignmentDateDisplay(item)}</Typography>
                   </Box>
                 )
               }
@@ -113,7 +112,7 @@ const CourseCard = ({ title, courseID, course}) => {
         </Button>
       </CardActions>
     </Card>
-    <NewAssignmentDialog openNewAssignDialog={openNewAssignDialog} setOpenNewAssignDialog={setOpenNewAssignDialog} course={course.name} courseID={courseID} assignments={assignments} setAssignments={setAssignments} setAssignments={setAssignments} setSnackbarOpen={setSnackbarOpen} setSnackbarText={setSnackbarText} setSnackbarSeverity={setSnackbarSeverity}/>
+    <NewAssignmentDialog openNewAssignDialog={openNewAssignDialog} setOpenNewAssignDialog={setOpenNewAssignDialog} course={course.name} courseID={courseID} assignments={assignments} setAssignments={setAssignments} setSnackbarOpen={setSnackbarOpen} setSnackbarText={setSnackbarText} setSnackbarSeverity={setSnackbarSeverity}/>
     <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={snackbarClose}>
       <Alert variant="outlined" severity={snackbarSeverity} onClose={snackbarClose}>
         {snackbarText}
