@@ -12,6 +12,7 @@ import {
   ListItem,
   ListItemText,
   ListItemButton,
+  Menu,
 } from "@mui/material"
 import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
@@ -34,13 +35,29 @@ const NavBar = ({setOpenCourseDialog}) => {
     return login;
   })
 
+  //Menu States
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuAnchor, setMenuAnchor] = useState(null);
+
+  const openMenu = (event) => {
+    setMenuAnchor(event.currentTarget);
+    setMenuOpen(true);
+  }
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+  }
+
   const userIcon = () => (
     <>
       <Typography>{userToken.username}</Typography>
       <Box>
-        <IconButton sx={{color:"white", mr:1}} size="large">
+        <IconButton sx={{color:"white", mr:1}} size="large" onClick={openMenu}>
           <AccountCircleIcon/>
         </IconButton>
+        <Menu anchorEl={menuAnchor} open={menuOpen} onClose={closeMenu}>
+          <MenuItem onClick={closeMenu}>Logout</MenuItem>
+        </Menu>
       </Box>
     </>
   )
