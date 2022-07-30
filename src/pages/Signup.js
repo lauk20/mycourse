@@ -4,7 +4,8 @@ import {
   Avatar,
   Typography,
   TextField,
-  Button
+  Button,
+  LinearProgress,
 } from "@mui/material"
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import { styled } from "@mui/material/styles"
@@ -32,17 +33,18 @@ const WhiteBorderTextField = styled(TextField)`
 const Signup = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   //const [usernameErr, setUsernameErr] = useState(false)
   //const [usernameHelpText, setUsernameHelpText] = useState("Must be 3-20 characters long and only contain letters and numbers.");
   const [signupHelpText, setSignupHelpText] = useState("");
+  const [loading, setLoading] = useState(false)
 
   const navigate = useNavigate()
 
-  const submit = async (event) => {
-    event.preventDefault();
-    //https://stackoverflow.com/questions/46720685/catching-errors-with-axios
+  const request = async () => {
     try {
+      setLoading(true)
       await UsersAPI.signup(username, password)
       setUsername("");
       setPassword("");
@@ -50,10 +52,23 @@ const Signup = () => {
     } catch (err) {
       if (err.response.data.error === "username already taken") {
         setSignupHelpText("Username already taken");
-      } else {
+      } else if (err.response.data.error === "username does not meet requirements") {
         setSignupHelpText("Username does not meet requirements")
+      } else if (err.response.data.error === "password does not meet requirements") {
+        setSignupHelpText("Password does not meet requirements")
       }
       //console.log(err)
+    }
+
+    setLoading(false);
+  }
+  const submit = async (event) => {
+    //event.preventDefault();
+    setSignupHelpText("");
+    setLoading(true)
+    //https://stackoverflow.com/questions/46720685/catching-errors-with-axios
+    if (password !== confirmPassword) {
+      return setSignupHelpText("Passwords do not match")
     }
   }
 
@@ -66,13 +81,21 @@ const Signup = () => {
           </Avatar>
           <Typography color="white" variant="h6">SIGN UP</Typography>
         </Grid>
-        <Box component="form" noValidate onSubmit={submit}>
+        <Box component="form" noValidate onSubmit={(event) => {event.preventDefault(); submit(); request()}}>
           <WhiteBorderTextField error={false} value={username} helperText="Must be 3-20 characters long and only contain letters and numbers." onChange={({target}) => {setUsername(target.value)}} fullWidth required margin="normal" name="username" label="Username" id="username" sx={{input: {color: "white"}}} autoFocus/>
           <WhiteBorderTextField value={password} helperText="Must be 8-20 characters long" onChange={({target}) => {setPassword(target.value)}} fullWidth required margin="normal" name="password" label="Password" id="password" type="password" sx={{input: {color: "white"}}}/>
+          <WhiteBorderTextField value={confirmPassword} helperText="Retype your password" onChange={({target}) => {setConfirmPassword(target.value)}} fullWidth required margin="normal" name="confirmPassword" label="Confirm Password" id="confirmPassword" type="password" sx={{input: {color: "white"}}}/>
           <Button type="submit" fullWidth sx={{color: "white", backgroundColor: "rgb(25, 25, 25)", "&:hover": {bgcolor: "rgb(25, 25, 25)"}, mt: 2}}>SIGN UP</Button>
-          <Typography variant="caption" color="red">{signupHelpText}</Typography>
+          <Box>
+            <Typography variant="caption" color="red">{signupHelpText}</Typography>
+          </Box>
+          <Box>
+            {loading &&
+              <LinearProgress/>
+            }
+          </Box>
         </Box>
-        <Box display="flex" justifyContent="flex-start" width="100%">
+        <Box display="flex" justifyContent="flex-start" width="100%" position="relative">
           <Button component={ Link } to="/login" sx={{mt: 2, color: "white"}}>Login</Button>
         </Box>
       </Grid>
