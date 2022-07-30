@@ -6,6 +6,7 @@ import {
   TextField,
   Button,
   LinearProgress,
+  Toolbar,
 } from "@mui/material"
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import { styled } from "@mui/material/styles"
@@ -74,8 +75,10 @@ const Signup = () => {
   }
 
   return (
+    <>
+    <Toolbar/>
     <Box display="flex" justifyContent="center" alignItems="center" sx={{height: "75vh"}}>
-      <Grid container sx={{backgroundColor: "rgb(35, 35, 35)", display: "flex", flexDirection: "column", alignItems: "center", width: "60%", maxWidth: 500, p: 2}}>
+      <Grid container sx={{backgroundColor: "rgb(35, 35, 35)", display: "flex", flexDirection: "column", alignItems: "center", width: "60%", maxWidth: 500, minWidth: 325, p: 2}}>
         <Grid item sx={{display: "flex", justifyContent:"center", flexDirection: "column", alignItems: "center"}}>
           <Avatar sx={{color: "white", width: "50", height: "50", bgcolor: "rgb(25, 25, 25)"}}>
             <AssignmentIndIcon variant="large" sx={{fontSize: 30}}/>
@@ -101,6 +104,7 @@ const Signup = () => {
         </Box>
       </Grid>
     </Box>
+    </>
   )
 }
 
