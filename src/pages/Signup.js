@@ -87,7 +87,7 @@ const Signup = () => {
           </Avatar>
           <Typography color="white" variant="h6">SIGN UP</Typography>
         </Grid>
-        <Box component="form" noValidate onSubmit={(event) => {event.preventDefault(); submit(); request()}}>
+        <Box component="form" noValidate onSubmit={(event) => {event.preventDefault(); submit(); if (!loading) {request()}}}>
           <WhiteBorderTextField error={false} value={username} helperText="Must be 3-20 characters long and only contain letters and numbers." onChange={({target}) => {setUsername(target.value)}} fullWidth required margin="normal" name="username" label="Username" id="username" sx={{input: {color: "white"}}} autoFocus/>
           <WhiteBorderTextField value={password} helperText="Must be 8-20 characters long" onChange={({target}) => {setPassword(target.value)}} fullWidth required margin="normal" name="password" label="Password" id="password" type="password" sx={{input: {color: "white"}}}/>
           <WhiteBorderTextField value={confirmPassword} helperText="Retype your password" onChange={({target}) => {setConfirmPassword(target.value)}} fullWidth required margin="normal" name="confirmPassword" label="Confirm Password" id="confirmPassword" type="password" sx={{input: {color: "white"}}}/>
