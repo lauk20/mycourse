@@ -44,6 +44,11 @@ const Signup = () => {
   const navigate = useNavigate()
 
   const request = async () => {
+    if (password !== confirmPassword) {
+      setLoading(false);
+      return setSignupHelpText("Passwords do not match")
+    }
+
     try {
       setLoading(true)
       await UsersAPI.signup(username, password)
@@ -69,9 +74,6 @@ const Signup = () => {
     setSignupHelpText("");
     setLoading(true)
     //https://stackoverflow.com/questions/46720685/catching-errors-with-axios
-    if (password !== confirmPassword) {
-      return setSignupHelpText("Passwords do not match")
-    }
   }
 
   return (
