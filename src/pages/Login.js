@@ -6,6 +6,7 @@ import {
   TextField,
   Button,
   Toolbar,
+  LinearProgress,
 } from "@mui/material"
 import LoginIcon from '@mui/icons-material/Login';
 import { styled } from "@mui/material/styles"
@@ -37,18 +38,27 @@ const Login = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const submit = async (event) => {
-    event.preventDefault();
 
+  const [loginText, setLoginText] = useState("");
+  const [loading, setLoading] = useState(false)
+
+  const request = async () => {
     try {
       const userToken = await dispatch(login(username, password))
       window.localStorage.setItem("mycoursetoken", JSON.stringify(userToken))
       setUsername("")
       setPassword("")
       navigate("/courses")
-    } catch {
-      console.log("error")
+    } catch (err) {
+      setLoginText("Invalid username or password");
     }
+
+    setLoading(false);
+  }
+
+  const submit = async (event) => {
+    setLoginText("");
+    setLoading(true);
   }
 
   return (
@@ -62,10 +72,18 @@ const Login = () => {
             </Avatar>
             <Typography color="white" variant="h6">LOGIN</Typography>
           </Grid>
-          <Box component="form" noValidate onSubmit={submit}>
+          <Box component="form" noValidate onSubmit={(event) => {event.preventDefault(); submit(); request();}}>
             <WhiteBorderTextField value={username} onChange={({target}) => {setUsername(target.value)}} fullWidth required margin="normal" name="username" label="Username" id="username" sx={{input: {color: "white"}}} autoFocus/>
             <WhiteBorderTextField value={password} onChange={({target}) => {setPassword(target.value)}} fullWidth required margin="normal" name="password" label="Password" id="password" type="password" sx={{input: {color: "white"}}}/>
             <Button type="submit" fullWidth sx={{color: "white", backgroundColor: "rgb(25, 25, 25)", "&:hover": {bgcolor: "rgb(25, 25, 25)"}}}>Login</Button>
+            <Box>
+              <Typography variant="caption" color="red">{loginText}</Typography>
+            </Box>
+            <Box>
+              {loading &&
+                <LinearProgress/>
+              }
+            </Box>
             <Button component={ Link } to="/signup" sx={{mt: 2, color: "white"}}>Sign Up</Button>
           </Box>
         </Grid>
