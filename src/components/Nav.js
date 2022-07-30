@@ -117,7 +117,7 @@ const NavBar = ({setOpenCourseDialog}) => {
     <Toolbar/>
     {userToken &&
       <Drawer anchor="left" open={drawerOpen}>
-        <Toolbar/>
+        <Toolbar sx={{width: 250}}/>
         <List>
           {
             courses.map(course => {
@@ -130,6 +130,11 @@ const NavBar = ({setOpenCourseDialog}) => {
               )
             })
           }
+          <ListItem sx={{width: "250px", m: 0}} disablePadding>
+            <ListItemButton onClick={openDialog} sx={{width: "100%", m: 0}}>
+              <ListItemText primary={"Add a Course"}/>
+            </ListItemButton>
+          </ListItem>
         </List>
       </Drawer>
     }
