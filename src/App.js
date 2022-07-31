@@ -6,6 +6,7 @@ import CoursePage from "./pages/CoursePage"
 import Login from "./pages/Login"
 import AddCourse from "./pages/AddCourse"
 import Signup from "./pages/Signup"
+import Landing from "./pages/Landing"
 import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { setLogin } from "./reducers/loginReducers"
@@ -38,11 +39,12 @@ function App() {
         <Router>
           <Nav setOpenCourseDialog={setOpenCourseDialog}/>
           <Routes>
+            <Route path="/" element={<Landing userToken={userToken}/>}/>
             <Route path ="/courses/:id" element={userToken == null ? <Login/> : <CoursePage/>}/>
             <Route path="/addcourse" element={<AddCourse/>}/>
             <Route path="/courses" element={userToken == null ? <Login/> : <Courses openCourseDialog={openCourseDialog} setOpenCourseDialog={setOpenCourseDialog}/>}/>
-            <Route path="/login" element={<Login/>}/>
-            <Route path="/signup" element={<Signup/>}/>
+            <Route path="/login" element={<Login userToken={userToken}/>}/>
+            <Route path="/signup" element={<Signup userToken={userToken}/>}/>
           </Routes>
         </Router>
       </div>
