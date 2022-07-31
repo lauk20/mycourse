@@ -17,9 +17,10 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { initializeCourses } from "../reducers/courseReducers"
+import { removeLogin } from "../reducers/loginReducers"
 
 const NavBar = ({setOpenCourseDialog}) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -48,6 +49,14 @@ const NavBar = ({setOpenCourseDialog}) => {
     setMenuOpen(false);
   }
 
+  const navigate = useNavigate();
+  const logout = () => {
+    window.localStorage.removeItem("mycoursetoken");
+    window.location.reload(true);
+    removeLogin();
+    navigate("/login")
+  }
+
   const userIcon = () => (
     <>
       <Typography>{userToken.username}</Typography>
@@ -56,7 +65,7 @@ const NavBar = ({setOpenCourseDialog}) => {
           <AccountCircleIcon/>
         </IconButton>
         <Menu anchorEl={menuAnchor} open={menuOpen} onClose={closeMenu}>
-          <MenuItem onClick={closeMenu}>Logout</MenuItem>
+          <MenuItem onClick={() => {closeMenu(); logout();}}>Logout</MenuItem>
         </Menu>
       </Box>
     </>
