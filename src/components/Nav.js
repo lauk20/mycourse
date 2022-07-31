@@ -52,9 +52,9 @@ const NavBar = ({setOpenCourseDialog}) => {
   const navigate = useNavigate();
   const logout = () => {
     window.localStorage.removeItem("mycoursetoken");
-    window.location.reload(true);
     removeLogin();
     navigate("/login")
+    window.location.reload(true);
   }
 
   const userIcon = () => (
