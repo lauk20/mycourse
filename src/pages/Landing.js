@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import {
   Grid,
   Typography,
@@ -19,7 +19,8 @@ const homePageStyles = (
     styles={{
       body: {
         backgroundImage: `url(${landingImg})`,
-        backgroundSize: "cover",
+        backgroundSize: "100vw 100vh",
+        backgroundRepeat: "no-repeat"
       },
     }}
   />
@@ -31,6 +32,10 @@ const Landing = ({userToken}) => {
   if (userToken != null) {
     navigate("/courses");
   }
+
+  useEffect(() => {
+    document.title = "MyCourse - Get Started"
+  }, [])
 
   const containerRef = useRef(null)
 
