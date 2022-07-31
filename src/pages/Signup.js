@@ -43,13 +43,13 @@ const Signup = ({userToken}) => {
 
   const navigate = useNavigate()
 
-  if (userToken != null) {
-    navigate("/courses")
-  }
 
   useEffect(() => {
     document.title = "MyCourse - Sign Up"
-  }, [])
+    if (userToken != null) {
+      navigate("/courses")
+    }
+  }, [userToken])
 
   const request = async () => {
     if (password !== confirmPassword) {
