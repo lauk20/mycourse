@@ -38,13 +38,12 @@ const Login = ({userToken}) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  if (userToken != null) {
-    navigate("/courses")
-  }
-
   useEffect(() => {
     document.title = "MyCourse - Login"
-  }, [])
+    if (userToken != null) {
+      navigate("/courses")
+    }
+  }, [userToken])
 
   const [loginText, setLoginText] = useState("");
   const [loading, setLoading] = useState(false)
@@ -53,14 +52,11 @@ const Login = ({userToken}) => {
     try {
       const userToken = await dispatch(login(username, password))
       window.localStorage.setItem("mycoursetoken", JSON.stringify(userToken))
-      setUsername("")
-      setPassword("")
       navigate("/courses")
     } catch (err) {
       setLoginText("Invalid username or password");
+      setLoading(false);
     }
-
-    setLoading(false);
   }
 
   const submit = async (event) => {
