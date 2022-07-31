@@ -31,7 +31,7 @@ const WhiteBorderTextField = styled(TextField)`
   }
 `;
 
-const Signup = () => {
+const Signup = ({userToken}) => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -42,6 +42,10 @@ const Signup = () => {
   const [loading, setLoading] = useState(false)
 
   const navigate = useNavigate()
+
+  if (userToken != null) {
+    navigate("/courses")
+  }
 
   const request = async () => {
     if (password !== confirmPassword) {

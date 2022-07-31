@@ -41,7 +41,6 @@ function App() {
           <Routes>
             <Route path="/" element={<Landing userToken={userToken}/>}/>
             <Route path ="/courses/:id" element={userToken == null ? <Login/> : <CoursePage/>}/>
-            <Route path="/addcourse" element={<AddCourse/>}/>
             <Route path="/courses" element={userToken == null ? <Login/> : <Courses openCourseDialog={openCourseDialog} setOpenCourseDialog={setOpenCourseDialog}/>}/>
             <Route path="/login" element={<Login userToken={userToken}/>}/>
             <Route path="/signup" element={<Signup userToken={userToken}/>}/>

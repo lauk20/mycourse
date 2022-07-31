@@ -32,12 +32,15 @@ const WhiteBorderTextField = styled(TextField)`
   }
 `;
 
-const Login = () => {
+const Login = ({userToken}) => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  if (userToken != null) {
+    navigate("/courses")
+  }
 
   const [loginText, setLoginText] = useState("");
   const [loading, setLoading] = useState(false)
