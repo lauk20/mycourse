@@ -10,7 +10,7 @@ import {
 } from "@mui/material"
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import { styled } from "@mui/material/styles"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import UsersAPI from "../services/UsersAPI"
 
@@ -46,6 +46,10 @@ const Signup = ({userToken}) => {
   if (userToken != null) {
     navigate("/courses")
   }
+
+  useEffect(() => {
+    document.title = "MyCourse - Sign Up"
+  }, [])
 
   const request = async () => {
     if (password !== confirmPassword) {

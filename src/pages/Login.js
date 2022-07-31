@@ -10,7 +10,7 @@ import {
 } from "@mui/material"
 import LoginIcon from '@mui/icons-material/Login';
 import { styled } from "@mui/material/styles"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { login } from "../reducers/loginReducers"
 import { useDispatch } from "react-redux"
@@ -41,6 +41,10 @@ const Login = ({userToken}) => {
   if (userToken != null) {
     navigate("/courses")
   }
+
+  useEffect(() => {
+    document.title = "MyCourse - Login"
+  }, [])
 
   const [loginText, setLoginText] = useState("");
   const [loading, setLoading] = useState(false)
