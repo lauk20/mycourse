@@ -25,7 +25,7 @@ import SettingsIcon from "@mui/icons-material/Settings"
 import NewAssignmentDialog from "../components/NewAssignmentDialog"
 import AssignmentDetailsCard from "../components/AssignmentDetailsCard"
 import { useState, useEffect } from "react"
-import { useParams, useNavigate } from "react-router-dom"
+import { useParams, useNavigate, Link } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { getCourse, setCourseTitle, deleteCourse } from "../reducers/courseReducers"
 import { styled } from "@mui/material/styles"
@@ -117,6 +117,9 @@ const CoursePage = () => {
   //Delete Course Dialog States
   const [openDeleteCourse, setOpenDeleteCourse] = useState(false);
 
+  //Loading
+  const [loading, setLoading] = useState(true);
+
   const openAssign = () => {
     setOpenNewAssignDialog(true)
   }
@@ -152,12 +155,25 @@ const CoursePage = () => {
         setAssignments(c.assignments.slice().sort((a, b) => {return new Date(a.due) - new Date(b.due)}))
         document.title = "MyCourse - " + c.name
       })
+      .catch(err => {
+        setCourse(undefined)
+      });
+    setLoading(false)
   }, [courseID, token])
 
-  if (course === null) {
+  if (loading) {
     return (
       <Backdrop open={true}>
         <CircularProgress/>
+      </Backdrop>
+    )
+  } else if (course === undefined) {
+    return (
+      <Backdrop open={true}>
+        <Box display="flex" flexDirection="column">
+          <Typography variant="h6">Course Not Found</Typography>
+          <Button component={Link} to="/courses">Return to Courses</Button>
+        </Box>
       </Backdrop>
     )
   }
