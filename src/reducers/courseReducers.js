@@ -62,7 +62,7 @@ const courseSlice = createSlice({
       return newState
     },
     removeCourse(state, action) {
-      const newState = state.filter(course => course._id == action.payload);
+      const newState = state.filter(course => course._id === action.payload);
 
       return newState;
     },
