@@ -150,15 +150,16 @@ const CoursePage = () => {
   useEffect(() => {
     //dispatch(initializeCourses(token))
     getCourse(courseID, token)
-      .then((c) => {
+      .then(c => {
         setCourse(c)
         setAssignments(c.assignments.slice().sort((a, b) => {return new Date(a.due) - new Date(b.due)}))
         document.title = "MyCourse - " + c.name
+        setLoading(false)
       })
       .catch(err => {
         setCourse(undefined)
+        setLoading(false)
       });
-    setLoading(false)
   }, [courseID, token])
 
   if (loading) {
