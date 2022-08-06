@@ -18,7 +18,7 @@ function App() {
   //window.localStorage.removeItem("mycoursetoken")
   useEffect(() => {
     dispatch(refreshTokenLogin());
-  }, [])
+  }, [dispatch])
 
   const userToken = useSelector(state => {
     const login = state.login
