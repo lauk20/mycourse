@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import UsersAPI from "../services/UsersAPI"
+import axios from "axios"
 
 const loginSlice = createSlice({
   name: "login",
@@ -22,6 +23,14 @@ export const login = (username, password) => {
     }
 
     return response;
+  }
+}
+
+export const refreshTokenLogin = () => {
+  return async (dispatch) => {
+    const response = await axios.get("http://localhost:3001/api/refresh");
+    dispatch(setLogin(response.data));
+    console.log(response)
   }
 }
 

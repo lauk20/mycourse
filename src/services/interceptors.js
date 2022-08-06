@@ -1,8 +1,9 @@
 import axios from "axios"
-//should set Authorization header
-//https://blog.bitsrc.io/setting-up-axios-interceptors-for-all-http-calls-in-an-application-71bc2c636e4e
-let store;
+import { setLogin } from "../reducers/loginReducers"
 
+const refreshUrl = "http://localhost:3001/api/refresh"
+
+let store;
 export const injectStore = _store => {
   store = _store
 }
@@ -10,12 +11,35 @@ export const injectStore = _store => {
 const authInstance = axios.create();
 
 authInstance.interceptors.request.use((request) => {
-  const token = store.getState().login.token;
-  request.headers.Authorization = "bearer " + token;
+  let token = "";
 
+  if (store.getState().login) {
+    token = store.getState().login.token;
+  }
+
+  request.headers.Authorization = "bearer " + token;
+  
   return request;
 }, (error) => {
   return Promise.reject(error);
 });
+
+authInstance.interceptors.response.use(async (response) => {
+  return response;
+}, async (error) => {
+  const originalRequest = error.config;
+  if (error && error.response && error.response.data.error && error.response.data.error === "expired token") {
+    try {
+      const res = await axios.get(refreshUrl);
+      store.dispatch(setLogin(res.data));
+      return res;
+      //return authInstance(originalRequest);
+    } catch (err) {
+      return Promise.reject(err);
+    }
+  }
+
+  return Promise.reject(error);
+})
 
 export default authInstance;

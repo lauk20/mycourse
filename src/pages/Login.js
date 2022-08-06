@@ -51,7 +51,7 @@ const Login = ({userToken}) => {
   const request = async () => {
     try {
       const userToken = await dispatch(login(username, password))
-      window.localStorage.setItem("mycoursetoken", JSON.stringify(userToken))
+      //window.localStorage.setItem("mycoursetoken", JSON.stringify(userToken))
       navigate("/courses")
     } catch (err) {
       setLoginText("Invalid username or password");
