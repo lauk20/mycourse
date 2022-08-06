@@ -6,8 +6,6 @@ import {
   Button,
   Toolbar,
   Slide,
-  Fade,
-  Grow,
   GlobalStyles,
 } from "@mui/material"
 import { Link, useNavigate } from "react-router-dom"
@@ -29,13 +27,13 @@ const homePageStyles = (
 const Landing = ({userToken}) => {
   const navigate = useNavigate();
 
-  if (userToken != null) {
-    navigate("/courses");
-  }
 
   useEffect(() => {
     document.title = "MyCourse - Get Started"
-  }, [])
+    if (userToken != null) {
+      navigate("/courses");
+    }
+  }, [navigate, userToken])
 
   const containerRef = useRef(null)
 
@@ -51,7 +49,7 @@ const Landing = ({userToken}) => {
                 <Typography variant="h1" spacing={1} sx={{mr: 1, letterSpacing:"0.3rem", fontWeight: 60, textAlign: "center"}}>MYCOURSE</Typography>
               </Grid>
             </Slide>
-            <Slide direction="down" in={true} mountOnEnter unmountOnExit container={containerRef.current} timeout={1000} container={containerRef.current}>
+            <Slide direction="down" in={true} mountOnEnter unmountOnExit container={containerRef.current} timeout={1000}>
               <Grid item display="flex" justifyContent="center">
                 <Typography variant="h6" spacing={1} sx={{mr: 1, letterSpacing:"0.3rem", fontWeight: 60, textAlign: "center"}}>YOUR PERSONAL COURSEWORK MANAGEMENT TOOL</Typography>
               </Grid>
