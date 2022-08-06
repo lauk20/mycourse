@@ -7,6 +7,8 @@ import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from "@mui/material/styles"
 import theme from "./Theme"
 import store from "./store"
+import { injectStore } from "./services/interceptors"
+injectStore(store)
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

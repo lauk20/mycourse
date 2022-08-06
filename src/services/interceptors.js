@@ -1,9 +1,20 @@
 import axios from "axios"
-import store from "../store"
 //should set Authorization header
-axios.interceptors.request.use((config) => {
+//https://blog.bitsrc.io/setting-up-axios-interceptors-for-all-http-calls-in-an-application-71bc2c636e4e
+let store;
+
+export const injectStore = _store => {
+  store = _store
+}
+
+const authInstance = axios.create();
+
+authInstance.interceptors.request.use((request) => {
   const state = store.getState();
-  return config;
+  console.log(state)
+  return request;
 }, (error) => {
   return Promise.reject(error);
 });
+
+export default authInstance;

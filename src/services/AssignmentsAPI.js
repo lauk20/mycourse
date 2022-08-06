@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from "./interceptors.js"
 const url = "http://localhost:3001/api/assignments"
 
 const getAssignments = async () => {
