@@ -18,7 +18,7 @@ authInstance.interceptors.request.use((request) => {
   }
 
   request.headers.Authorization = "bearer " + token;
-  
+
   return request;
 }, (error) => {
   return Promise.reject(error);
@@ -32,8 +32,8 @@ authInstance.interceptors.response.use(async (response) => {
     try {
       const res = await axios.get(refreshUrl);
       store.dispatch(setLogin(res.data));
-      return res;
-      //return authInstance(originalRequest);
+      //return res;
+      return authInstance(originalRequest);
     } catch (err) {
       return Promise.reject(err);
     }
