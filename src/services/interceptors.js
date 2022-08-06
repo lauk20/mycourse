@@ -10,8 +10,9 @@ export const injectStore = _store => {
 const authInstance = axios.create();
 
 authInstance.interceptors.request.use((request) => {
-  const state = store.getState();
-  console.log(state)
+  const token = store.getState().login.token;
+  request.headers.Authorization = "bearer " + token;
+
   return request;
 }, (error) => {
   return Promise.reject(error);
