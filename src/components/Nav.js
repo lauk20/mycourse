@@ -108,7 +108,7 @@ const NavBar = ({setOpenCourseDialog}) => {
               </IconButton>
             </Grid>
           }
-          {!isMobile &&
+          { ((isMobile && !userToken) || (!isMobile)) &&
             <Grid item display="flex" justifyContent="flex-start" alignItems="center">
               <Typography variant="h6" sx={{mr: 1, letterSpacing:"0.3rem"}}>
                 MYCOURSE
@@ -150,7 +150,7 @@ const NavBar = ({setOpenCourseDialog}) => {
       <Drawer anchor="left" open={drawerOpen}>
         <Toolbar sx={{width: 250}}/>
         <List>
-          { isMobile &&
+          { (isMobile) &&
             <ListItem sx={{width: "250px", ml: 1}} disablePadding>
               <Typography variant="h6" sx={{mr: 1, mt: 1, letterSpacing:"0.3rem", textAlign: "center"}}>
                 MYCOURSE
