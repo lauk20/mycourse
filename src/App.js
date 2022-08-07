@@ -8,9 +8,7 @@ import Signup from "./pages/Signup"
 import Landing from "./pages/Landing"
 import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { useNavigate } from "react-router-dom"
-import { setLogin, refreshTokenLogin } from "./reducers/loginReducers"
-import authInstance from "./services/interceptors"
+import { refreshTokenLogin } from "./reducers/loginReducers"
 
 function App() {
   const [openCourseDialog, setOpenCourseDialog] = useState(false)

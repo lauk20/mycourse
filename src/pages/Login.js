@@ -43,14 +43,14 @@ const Login = ({userToken}) => {
     if (userToken != null) {
       navigate("/courses")
     }
-  }, [userToken])
+  }, [userToken, navigate])
 
   const [loginText, setLoginText] = useState("");
   const [loading, setLoading] = useState(false)
 
   const request = async () => {
     try {
-      const userToken = await dispatch(login(username, password))
+      await dispatch(login(username, password))
       //window.localStorage.setItem("mycoursetoken", JSON.stringify(userToken))
       navigate("/courses")
     } catch (err) {
