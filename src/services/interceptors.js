@@ -35,6 +35,7 @@ authInstance.interceptors.response.use(async (response) => {
       //return res;
       return authInstance(originalRequest);
     } catch (err) {
+      window.location = "/login"
       return Promise.reject(err);
     }
   }

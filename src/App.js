@@ -8,6 +8,7 @@ import Signup from "./pages/Signup"
 import Landing from "./pages/Landing"
 import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
 import { setLogin, refreshTokenLogin } from "./reducers/loginReducers"
 import authInstance from "./services/interceptors"
 
@@ -17,7 +18,11 @@ function App() {
 
   //window.localStorage.removeItem("mycoursetoken")
   useEffect(() => {
-    dispatch(refreshTokenLogin());
+    try {
+      dispatch(refreshTokenLogin());
+    } catch (err) {
+      window.location = "/login"
+    }
   }, [dispatch])
 
   const userToken = useSelector(state => {
