@@ -73,8 +73,8 @@ const AssignmentDetailsCard = ({ assign, assignments, setAssignments, setSnackba
 
   const dispatch = useDispatch();
   const completeAssignmentButton = async () => {
-    dispatch(completeAssignment(assign._id, token));
-    dispatch(removeAssignment(assign._id));
+    await dispatch(completeAssignment(assign._id, token));
+    await dispatch(removeAssignment(assign._id));
     setAssignments(assignments.filter(a => a._id !== assign._id))
     setOpen(false);
 
