@@ -39,5 +39,18 @@ export const refreshTokenLogin = () => {
   }
 }
 
+export const logoutSession = () => {
+  return async (dispatch) => {
+    try {
+      const response = await authInstance.get("http://localhost:3001/api/logout");
+      if (response) {
+        dispatch(removeLogin())
+      }
+    } catch (err) {
+      return err;
+    }
+  }
+}
+
 export const { setLogin, removeLogin } = loginSlice.actions
 export default loginSlice.reducer

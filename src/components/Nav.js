@@ -20,7 +20,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { initializeCourses } from "../reducers/courseReducers"
-import { removeLogin } from "../reducers/loginReducers"
+import { logoutSession } from "../reducers/loginReducers"
 
 const NavBar = ({setOpenCourseDialog}) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -50,9 +50,9 @@ const NavBar = ({setOpenCourseDialog}) => {
   }
 
   const navigate = useNavigate();
-  const logout = () => {
-    window.localStorage.removeItem("mycoursetoken");
-    removeLogin();
+  const dispatch = useDispatch();
+  const logout = async () => {
+    await dispatch(logoutSession());
     navigate("/login")
     window.location.reload(true);
   }
@@ -81,7 +81,6 @@ const NavBar = ({setOpenCourseDialog}) => {
     </>
   )
 
-  const dispatch = useDispatch()
   useEffect(() => {
     if (userToken != null){
       dispatch(initializeCourses(userToken.token))
