@@ -13,6 +13,8 @@ import {
   ListItemText,
   ListItemButton,
   Menu,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material"
 import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
@@ -24,6 +26,8 @@ import { logoutSession } from "../reducers/loginReducers"
 
 const NavBar = ({setOpenCourseDialog}) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const openDialog = () => {
     setOpenCourseDialog(true);
@@ -104,11 +108,13 @@ const NavBar = ({setOpenCourseDialog}) => {
               </IconButton>
             </Grid>
           }
-          <Grid item display="flex" justifyContent="flex-start" alignItems="center">
-            <Typography variant="h6" sx={{mr: 1, letterSpacing:"0.3rem"}}>
-              MYCOURSE
-            </Typography>
-          </Grid>
+          {!isMobile &&
+            <Grid item display="flex" justifyContent="flex-start" alignItems="center">
+              <Typography variant="h6" sx={{mr: 1, letterSpacing:"0.3rem"}}>
+                MYCOURSE
+              </Typography>
+            </Grid>
+          }
           <Grid item display="flex" justifyContent="flex-start" alignItems="center">
             {
               userToken != null &&
@@ -144,6 +150,13 @@ const NavBar = ({setOpenCourseDialog}) => {
       <Drawer anchor="left" open={drawerOpen}>
         <Toolbar sx={{width: 250}}/>
         <List>
+          { isMobile &&
+            <ListItem sx={{width: "250px", ml: 1}} disablePadding>
+              <Typography variant="h6" sx={{mr: 1, mt: 1, letterSpacing:"0.3rem", textAlign: "center"}}>
+                MYCOURSE
+              </Typography>
+            </ListItem>
+          }
           {
             courses.map(course => {
               return (
